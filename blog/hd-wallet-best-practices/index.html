@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HD Wallets — How to Generate and Save Crypto Keys the Right Way — Qifei Li</title>
+  <meta name="description" content="A practical guide to generating HD wallet keys securely in the browser and storing them so they survive device loss, theft, and time." />
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../site.css" />
+  <style>
+    .post-main { padding-top: var(--nav-h); position: relative; z-index: 1; }
+    .post-head { padding: calc(clamp(3rem,6vw,5rem)) 0 clamp(2rem,4vw,3rem); border-bottom: 1px solid var(--line); }
+    .back-link { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); margin-bottom: 1.75rem; transition: gap 0.2s, color 0.2s; }
+    .back-link:hover { color: var(--amber); gap: 0.85rem; }
+    .post-title { font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 600; letter-spacing: -0.025em; color: var(--text-1); margin-bottom: 1.1rem; max-width: 22ch; line-height: 1.08; }
+    .post-tagline { font-family: var(--font-display); font-style: italic; font-size: 1.2rem; color: var(--amber); margin-bottom: 1.4rem; max-width: 60ch; line-height: 1.45; }
+    .post-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 0.75rem; }
+    .post-date { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.07em; color: var(--text-3); }
+    .post-meta .dot { color: var(--text-3); opacity: 0.4; }
+    .ptags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .ptag { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.05em; white-space: nowrap; color: var(--amber); background: var(--amber-dim); border: 1px solid rgba(232,160,32,0.18); padding: 0.18rem 0.55rem; border-radius: var(--radius); }
+    .prose { max-width: 720px; padding: 3.5rem 0 5rem; font-size: 1.05rem; line-height: 1.85; color: var(--text-2); }
+    .prose h2 { font-family: var(--font-display); font-size: 1.7rem; font-weight: 600; color: var(--text-1); margin: 3rem 0 1.25rem; line-height: 1.25; letter-spacing: -0.01em; }
+    .prose h3 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; color: var(--text-1); margin: 2.5rem 0 1rem; }
+    .prose p { margin-bottom: 1.5rem; }
+    .prose a { color: var(--teal); text-decoration: underline; text-underline-offset: 3px; transition: opacity 0.2s; }
+    .prose a:hover { opacity: 0.75; }
+    .prose strong { color: var(--text-1); font-weight: 600; }
+    .prose em { color: var(--text-2); font-style: italic; }
+    .prose ul, .prose ol { margin: 1.25rem 0 1.6rem; padding-left: 1.5rem; }
+    .prose li { margin-bottom: 0.6rem; }
+    .prose ul.task { list-style: none; padding-left: 0; }
+    .prose ul.task li { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.55rem 0; border-bottom: 1px solid var(--line); }
+    .prose ul.task .cb { width: 17px; height: 17px; flex-shrink: 0; margin-top: 0.3rem; border: 1.5px solid var(--text-3); border-radius: 4px; }
+    .prose ul.task li.done .cb { background: var(--amber); border-color: var(--amber); position: relative; }
+    .prose ul.task li.done .cb::after { content: '✓'; position: absolute; inset: 0; display: grid; place-items: center; font-size: 0.7rem; color: #07080f; }
+    .prose hr { border: none; border-top: 1px solid var(--line); margin: 3rem 0; }
+    .prose blockquote { margin: 2rem 0; padding: 1.25rem 1.5rem; border-left: 2px solid var(--amber); background: var(--surface); border-radius: 0 var(--radius) var(--radius) 0; color: var(--text-1); font-style: italic; }
+    .prose code:not(pre code) { font-family: var(--font-mono); font-size: 0.86em; background: var(--surface-2); color: var(--amber); padding: 0.15em 0.42em; border-radius: 4px; border: 1px solid var(--line); }
+    .prose pre { background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.4rem 1.5rem; overflow-x: auto; margin: 1.6rem 0; font-size: 0.84rem; line-height: 1.7; }
+    .prose pre code { font-family: var(--font-mono); background: none; color: var(--text-2); padding: 0; border: none; }
+    .prose table { width: 100%; border-collapse: collapse; margin: 1.6rem 0; font-size: 0.9rem; }
+    .prose th { text-align: left; padding: 0.7rem 1rem; background: var(--surface); border-bottom: 1px solid var(--line-2); color: var(--text-1); font-weight: 600; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.05em; text-transform: uppercase; }
+    .prose td { padding: 0.7rem 1rem; border-bottom: 1px solid var(--line); color: var(--text-2); vertical-align: top; }
+    .prose tr:last-child td { border-bottom: none; }
+    .post-foot { border-top: 1px solid var(--line); padding: 2.5rem 0; }
+    .post-foot a { font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--amber); }
+  </style>
+</head>
+<body>
+  <div class="blueprint" aria-hidden="true"></div>
+  <div class="amb-glow a" aria-hidden="true"></div>
+  <div class="amb-glow t" aria-hidden="true"></div>
+
+  <nav id="nav">
+    <div class="wrap nav-inner">
+      <a href="../../index.html" class="logo">
+        <span class="logo-mark">QL</span>
+        <span class="logo-name">Qifei&nbsp;Li</span>
+        <span class="logo-tag">// Privacy&nbsp;Computing</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="../../index.html" class="nav-link">Home</a></li>
+        <li><a href="../../blog/index.html" class="nav-link active">Blog</a></li>
+        <li><a href="../../tools.html" class="nav-link">Tools</a></li>
+        <li><a href="../../about.html" class="nav-link">About</a></li>
+        <li><a href="../../contact.html" class="nav-link">Contact</a></li>
+        <li><a href="https://mayfly.wiki" target="_blank" rel="noopener noreferrer" class="nav-venture"><span>MAYFLY</span> ↗</a></li>
+      </ul>
+      <button class="mobile-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span></button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="../../index.html" class="mobile-link">Home</a>
+      <a href="../../blog/index.html" class="mobile-link">Blog</a>
+      <a href="../../tools.html" class="mobile-link">Tools</a>
+      <a href="../../about.html" class="mobile-link">About</a>
+      <a href="../../contact.html" class="mobile-link">Contact</a>
+      <a href="https://mayfly.wiki" target="_blank" rel="noopener noreferrer" class="mobile-link mv">MAYFLY — EU AI Act Advisory ↗</a>
+    </div>
+  </nav>
+  <main class="post-main">
+    <header class="post-head">
+      <div class="wrap">
+        <a href="../../blog/index.html" class="back-link">← Blog</a>
+        <h1 class="post-title">HD Wallets — How to Generate and Save Crypto Keys the Right Way</h1>
+        <p class="post-tagline">One mnemonic. Bitcoin, Ethereum, Solana. Zero trust required.</p>
+        <div class="post-meta">
+          <time class="post-date">May 21, 2026</time>
+          <span class="dot">·</span>
+          <div class="ptags"><span class="ptag">#crypto</span><span class="ptag">#security</span><span class="ptag">#self-custody</span><span class="ptag">#bip39</span></div>
+        </div>
+      </div>
+    </header>
+    <div class="wrap">
+      <article class="prose">
+      <p>Most people lose crypto in one of two ways: their keys are stolen, or they lose access themselves. Both failures share the same root cause — they never understood what they were actually holding.</p>
+      <p>This guide explains HD wallets from first principles, then walks through exactly how to generate and store keys so you stay in control forever.</p>
+      <p><strong><a href="https://7feilee.github.io/hd-keygen/" target="_blank" rel="noopener noreferrer">Open the key generator →</a></strong>   Everything runs inside your browser. No data ever leaves your device.</p>
+      <hr />
+      <h2>What is an HD wallet?</h2>
+      <p>A <strong>hierarchical deterministic (HD) wallet</strong> is a system that generates an unlimited number of key pairs — Bitcoin addresses, Ethereum addresses, Solana addresses — from a single secret: a <strong>12–24 word recovery phrase</strong>.</p>
+      <p>The phrase is the root. Every address you'll ever use is derived from it mathematically. Lose the phrase, lose everything. Keep the phrase, recover everything — on any device, with any compatible wallet app, forever.</p>
+      <p>The standards that make this work:</p>
+      <table><thead><tr><th>Standard</th><th>What it does</th></tr></thead><tbody><tr><td>BIP39</td><td>Converts random bytes into a human-readable word list</td></tr><tr><td>BIP32</td><td>Derives a tree of child keys from a master key</td></tr><tr><td>BIP44/84</td><td>Defines the derivation path per coin (<code>m/44'/0'/…</code> for Bitcoin, <code>m/44'/60'/…</code> for Ethereum)</td></tr><tr><td>SLIP-0010</td><td>Ed25519 variant used for Solana</td></tr></tbody></table>
+      <p>The magic is that the derivation is <strong>deterministic and one-way</strong>. Given the phrase, you always get the same addresses. Given an address, you cannot go back to the phrase.</p>
+      <hr />
+      <h2>The key hierarchy</h2>
+      <pre><code>24-word mnemonic  (your only real secret)
+    │
+    ├── Bitcoin Legacy   m/44'/0'/0'/0/0    1A…
+    ├── Bitcoin SegWit   m/84'/0'/0'/0/0    bc1q…
+    ├── Ethereum         m/44'/60'/0'/0/0   0x…
+    └── Solana           m/44'/501'/0'/0'   …base58…</code></pre>
+      <p>All four addresses come from one phrase. You only need to back up one thing.</p>
+      <hr />
+      <h2>How to generate keys securely</h2>
+      <h3>1. Use a browser-only tool</h3>
+      <p>The gold standard for key generation is a tool that:</p>
+      <ul><li>Runs entirely in the browser (no server receives your data)</li><li>Uses <code>crypto.getRandomValues</code> — the OS-level entropy source</li><li>Has no network calls at runtime (works fully offline)</li><li>Is open source and auditable</li></ul>
+      <p><a href="https://7feilee.github.io/hd-keygen/" target="_blank" rel="noopener noreferrer">hd-keygen</a> meets all four criteria. The cryptographic libraries (noble/secp256k1, noble/hashes) are inlined in the HTML — there is no CDN dependency, no tracking, no backend.</p>
+      <h3>2. Add your own randomness (optional but good practice)</h3>
+      <p>Open the "Add extra randomness" section before generating. Type anything — keyboard mash, random characters, whatever. Your input is SHA-256 hashed and XOR'd with <code>crypto.getRandomValues</code>. Even if you type nothing, the system entropy alone is cryptographically strong. Adding your own entropy ensures that even a compromised random number generator cannot predict your keys.</p>
+      <h3>3. Choose 24 words</h3>
+      <p>12 words give 128 bits of entropy — technically secure, but 24 words give 256 bits. For long-term cold storage there is no reason to use fewer than 24 words.</p>
+      <h3>4. Generate offline when the stakes are high</h3>
+      <p>For significant amounts, open the tool page, then disconnect from the internet before generating. This eliminates any possibility of a network-layer attack observing your keys as they are generated. You can run it from a local file:</p>
+      <pre><code># Download the single HTML file
+curl -O https://raw.githubusercontent.com/7feilee/7feilee.github.io/master/public/hd-keygen/index.html
+open index.html</code></pre>
+      <hr />
+      <h2>How to save keys safely</h2>
+      <p>This is where most people fail. The threat model has three parts:</p>
+      <ol><li><strong>Loss</strong> — fire, flood, forgotten password, dead hard drive</li><li><strong>Theft</strong> — physical break-in, malware, phishing</li><li><strong>Inaccessibility</strong> — you die and no one you trust can recover the funds</li></ol>
+      <p>A single backup solves none of these. You need redundancy with separation.</p>
+      <h3>The two-layer system</h3>
+      <p><strong>Layer 1: Physical backup (what you write down)</strong></p>
+      <p>Write all 24 words on paper or stamp them into metal. Metal survives fire and water; paper does not. Number each word. Store in at least two separate physical locations — for example, your home and a safety deposit box.</p>
+      <blockquote>Never store the phrase digitally in plaintext. No photos, no notes app, no email to yourself, no password manager field labeled "seed phrase."</blockquote>
+      <p><strong>Layer 2: Encrypted digital backup (what you save to the cloud)</strong></p>
+      <p>Use the "Save encrypted backup" function in the tool. It encrypts your recovery phrase with AES-256-GCM and 600,000 PBKDF2-SHA256 iterations — the same standard used by password managers. Save the <code>.enc</code> file to:</p>
+      <ul><li>Google Drive, iCloud, or Dropbox (cloud redundancy)</li><li>A USB drive stored separately from the paper backup</li></ul>
+      <p>The encrypted file is useless without the passphrase. The passphrase should be:</p>
+      <ul><li>At least 16 characters</li><li>Not used anywhere else</li><li>Written in a physical notebook stored separately from both the paper backup and the USB</li></ul>
+      <h3>The separation principle</h3>
+      <table><thead><tr><th>Item</th><th>Location</th></tr></thead><tbody><tr><td>24-word paper backup</td><td>Home safe</td></tr><tr><td>Duplicate paper backup</td><td>Safety deposit box or trusted person</td></tr><tr><td><code>master_key.enc</code></td><td>Cloud (Google Drive / iCloud)</td></tr><tr><td><code>master_key.enc</code> duplicate</td><td>USB drive, third location</td></tr><tr><td>Encryption passphrase</td><td>Physical notebook, separate from above</td></tr></tbody></table>
+      <p>No single location holds enough to reconstruct your keys. An attacker who steals your laptop gets the encrypted file but not the passphrase. A burglar who finds your notebook gets the passphrase but not the encrypted file. A fire that destroys your home doesn't destroy the cloud copy or the safety deposit box.</p>
+      <h3>Verify your backups</h3>
+      <p>After saving, test that you can recover. Clear the tool, then reimport the phrase from your paper backup and re-derive your addresses. Confirm they match. Do this once a year.</p>
+      <p>You can also verify the encrypted file can be decrypted offline without a browser:</p>
+      <pre><code># Node.js
+node -e "const d=require('fs').readFileSync('master_key.enc'),c=require('crypto');const k=c.pbkdf2Sync('YOUR_PASSPHRASE',d.slice(5,37),600000,32,'sha256'),g=c.createDecipheriv('aes-256-gcm',k,d.slice(37,49));g.setAuthTag(d.slice(-16));process.stdout.write(g.update(d.slice(49,-16),'','utf8')+g.final('utf8'))"
+
+# Python
+python3 -c "import hashlib;from cryptography.hazmat.primitives.ciphers.aead import AESGCM;d=open('master_key.enc','rb').read();k=hashlib.pbkdf2_hmac('sha256',b'YOUR_PASSPHRASE',d[5:37],600000);print(AESGCM(k).decrypt(d[37:49],d[49:],None).decode())"</code></pre>
+      <hr />
+      <h2>What not to do</h2>
+      <ul><li><strong>Do not screenshot your phrase.</strong> Screenshots sync to iCloud/Google Photos automatically.</li><li><strong>Do not type your phrase into any app you did not audit.</strong> Hardware wallets, browser extensions, and mobile apps have all been compromised.</li><li><strong>Do not store all backups in one place.</strong> Fire, flood, and theft are single-location events.</li><li><strong>Do not use a short passphrase.</strong> "password1" defeats 600,000 PBKDF2 iterations in seconds on a GPU.</li><li><strong>Do not reuse addresses.</strong> Derive fresh indices for each use. The tool makes this trivial.</li><li><strong>Do not share your public key list carelessly.</strong> Addresses are public, but a full list reveals your holdings.</li></ul>
+      <hr />
+      <h2>Quick-start checklist</h2>
+      <ul class="task"><li class=""><span class="cb"></span>Open <a href="https://7feilee.github.io/hd-keygen/" target="_blank" rel="noopener noreferrer">hd-keygen</a> (consider going offline first)</li><li class=""><span class="cb"></span>Add extra randomness, select 24 words, generate</li><li class=""><span class="cb"></span>Write all 24 words on paper — number them, double-check spelling</li><li class=""><span class="cb"></span>Derive addresses for BTC, ETH, SOL — record your primary addresses</li><li class=""><span class="cb"></span>Save encrypted backup with a strong passphrase</li><li class=""><span class="cb"></span>Upload <code>.enc</code> file to cloud storage</li><li class=""><span class="cb"></span>Copy <code>.enc</code> file to USB drive</li><li class=""><span class="cb"></span>Write passphrase in a physical notebook, store separately</li><li class=""><span class="cb"></span>Make a duplicate paper backup, store at second location</li><li class=""><span class="cb"></span>Verify: clear tool, reimport phrase, confirm addresses match</li><li class=""><span class="cb"></span>Verify: decrypt <code>.enc</code> file offline with Node or Python command</li></ul>
+      <p>One afternoon of setup. A lifetime of control.</p>
+      <hr />
+      <p><em>Built on <a href="https://paulmillr.com/noble/" target="_blank" rel="noopener noreferrer">noble cryptography</a> — audited, dependency-free JavaScript. Source: <a href="https://github.com/7feilee/7feilee.github.io/blob/master/public/hd-keygen/index.html" target="_blank" rel="noopener noreferrer">github.com/7feilee/7feilee.github.io</a>.</em></p>
+      </article>
+    </div>
+    <div class="post-foot">
+      <div class="wrap"><a href="../../blog/index.html">← All writing</a></div>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="wrap footer-grid">
+      <div>
+        <div class="f-brand-mark">QL</div>
+        <span class="f-brand-name">Qifei Li</span>
+        <span class="f-brand-tag">// Security Engineer · Privacy Computing</span>
+        <p class="f-brand-loc">Heidelberg, Germany</p>
+      </div>
+      <div>
+        <p class="f-col-title">Site</p>
+        <nav class="f-nav">
+          <a href="../../index.html" class="f-link">Home</a>
+          <a href="../../blog/index.html" class="f-link">Blog</a>
+          <a href="../../about.html" class="f-link">About</a>
+          <a href="../../contact.html" class="f-link">Contact</a>
+        </nav>
+      </div>
+      <div>
+        <p class="f-col-title">Connect</p>
+        <nav class="f-nav">
+          <a href="mailto:hello@mayfly.wiki" class="f-link">Email</a>
+          <a href="https://github.com/7feilee" target="_blank" rel="noopener noreferrer" class="f-link">GitHub</a>
+          <a href="https://www.linkedin.com/in/qifei-li-99860112a/" target="_blank" rel="noopener noreferrer" class="f-link">LinkedIn</a>
+          <a href="https://x.com/7feilee" target="_blank" rel="noopener noreferrer" class="f-link">X / Twitter</a>
+        </nav>
+      </div>
+      <div>
+        <p class="f-col-title">Venture</p>
+        <a href="https://mayfly.wiki" target="_blank" rel="noopener noreferrer" class="f-venture">
+          <span class="f-venture-logo">MAYFLY</span>
+          <span class="f-venture-desc">EU AI Act compliance advisory for Chinese AI companies in Europe — using Privacy-Enhancing Technologies.</span>
+          <span class="f-venture-cta">Visit mayfly.wiki →</span>
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="wrap footer-bottom-inner">
+        <span>© 2026 Qifei Li</span><span class="sep">·</span>
+        <span>Heidelberg, Germany</span><span class="sep">·</span>
+        <a href="https://github.com/7feilee" target="_blank" rel="noopener noreferrer">Source on GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../site.js"></script>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EU AI Act Article 10 — Data Governance Requirements for Chinese AI Companies — Qifei Li</title>
+  <meta name="description" content="A practical breakdown of EU AI Act Article 10 data governance requirements for Chinese AI companies operating in Europe." />
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../site.css" />
+  <style>
+    .post-main { padding-top: var(--nav-h); position: relative; z-index: 1; }
+    .post-head { padding: calc(clamp(3rem,6vw,5rem)) 0 clamp(2rem,4vw,3rem); border-bottom: 1px solid var(--line); }
+    .back-link { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); margin-bottom: 1.75rem; transition: gap 0.2s, color 0.2s; }
+    .back-link:hover { color: var(--amber); gap: 0.85rem; }
+    .post-title { font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 600; letter-spacing: -0.025em; color: var(--text-1); margin-bottom: 1.1rem; max-width: 22ch; line-height: 1.08; }
+    .post-tagline { font-family: var(--font-display); font-style: italic; font-size: 1.2rem; color: var(--amber); margin-bottom: 1.4rem; max-width: 60ch; line-height: 1.45; }
+    .post-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 0.75rem; }
+    .post-date { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.07em; color: var(--text-3); }
+    .post-meta .dot { color: var(--text-3); opacity: 0.4; }
+    .ptags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .ptag { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.05em; white-space: nowrap; color: var(--amber); background: var(--amber-dim); border: 1px solid rgba(232,160,32,0.18); padding: 0.18rem 0.55rem; border-radius: var(--radius); }
+    .prose { max-width: 720px; padding: 3.5rem 0 5rem; font-size: 1.05rem; line-height: 1.85; color: var(--text-2); }
+    .prose h2 { font-family: var(--font-display); font-size: 1.7rem; font-weight: 600; color: var(--text-1); margin: 3rem 0 1.25rem; line-height: 1.25; letter-spacing: -0.01em; }
+    .prose h3 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; color: var(--text-1); margin: 2.5rem 0 1rem; }
+    .prose p { margin-bottom: 1.5rem; }
+    .prose a { color: var(--teal); text-decoration: underline; text-underline-offset: 3px; transition: opacity 0.2s; }
+    .prose a:hover { opacity: 0.75; }
+    .prose strong { color: var(--text-1); font-weight: 600; }
+    .prose em { color: var(--text-2); font-style: italic; }
+    .prose ul, .prose ol { margin: 1.25rem 0 1.6rem; padding-left: 1.5rem; }
+    .prose li { margin-bottom: 0.6rem; }
+    .prose ul.task { list-style: none; padding-left: 0; }
+    .prose ul.task li { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.55rem 0; border-bottom: 1px solid var(--line); }
+    .prose ul.task .cb { width: 17px; height: 17px; flex-shrink: 0; margin-top: 0.3rem; border: 1.5px solid var(--text-3); border-radius: 4px; }
+    .prose ul.task li.done .cb { background: var(--amber); border-color: var(--amber); position: relative; }
+    .prose ul.task li.done .cb::after { content: '✓'; position: absolute; inset: 0; display: grid; place-items: center; font-size: 0.7rem; color: #07080f; }
+    .prose hr { border: none; border-top: 1px solid var(--line); margin: 3rem 0; }
+    .prose blockquote { margin: 2rem 0; padding: 1.25rem 1.5rem; border-left: 2px solid var(--amber); background: var(--surface); border-radius: 0 var(--radius) var(--radius) 0; color: var(--text-1); font-style: italic; }
+    .prose code:not(pre code) { font-family: var(--font-mono); font-size: 0.86em; background: var(--surface-2); color: var(--amber); padding: 0.15em 0.42em; border-radius: 4px; border: 1px solid var(--line); }
+    .prose pre { background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.4rem 1.5rem; overflow-x: auto; margin: 1.6rem 0; font-size: 0.84rem; line-height: 1.7; }
+    .prose pre code { font-family: var(--font-mono); background: none; color: var(--text-2); padding: 0; border: none; }
+    .prose table { width: 100%; border-collapse: collapse; margin: 1.6rem 0; font-size: 0.9rem; }
+    .prose th { text-align: left; padding: 0.7rem 1rem; background: var(--surface); border-bottom: 1px solid var(--line-2); color: var(--text-1); font-weight: 600; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.05em; text-transform: uppercase; }
+    .prose td { padding: 0.7rem 1rem; border-bottom: 1px solid var(--line); color: var(--text-2); vertical-align: top; }
+    .prose tr:last-child td { border-bottom: none; }
+    .post-foot { border-top: 1px solid var(--line); padding: 2.5rem 0; }
+    .post-foot a { font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--amber); }
+  </style>
+</head>
+<body>
+  <div class="blueprint" aria-hidden="true"></div>
+  <div class="amb-glow a" aria-hidden="true"></div>
+  <div class="amb-glow t" aria-hidden="true"></div>
+
+  <nav id="nav">
+    <div class="wrap nav-inner">
+      <a href="../../index.html" class="logo">
+        <span class="logo-mark">QL</span>
+        <span class="logo-name">Qifei&nbsp;Li</span>
+        <span class="logo-tag">// Privacy&nbsp;Computing</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="../../index.html" class="nav-link">Home</a></li>
+        <li><a href="../../blog/index.html" class="nav-link active">Blog</a></li>
+        <li><a href="../../tools.html" class="nav-link">Tools</a></li>
+        <li><a href="../../about.html" class="nav-link">About</a></li>
+        <li><a href="../../contact.html" class="nav-link">Contact</a></li>
+        <li><a href="https://mayfly.wiki" target="_blank" rel="noopener noreferrer" class="nav-venture"><span>MAYFLY</span> ↗</a></li>
+      </ul>
+      <button class="mobile-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span></button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="../../index.html" class="mobile-link">Home</a>
+      <a href="../../blog/index.html" class="mobile-link">Blog</a>
+      <a href="../../tools.html" class="mobile-link">Tools</a>
+      <a href="../../about.html" class="mobile-link">About</a>
+      <a href="../../contact.html" class="mobile-link">Contact</a>
+      <a href="https://mayfly.wiki" target="_blank" rel="noopener noreferrer" class="mobile-link mv">MAYFLY — EU AI Act Advisory ↗</a>
+    </div>
+  </nav>
+  <main class="post-main">
+    <header class="post-head">
+      <div class="wrap">
+        <a href="../../blog/index.html" class="back-link">← Blog</a>
+        <h1 class="post-title">EU AI Act Article 10 — Data Governance Requirements for Chinese AI Companies</h1>
+        <p class="post-tagline">What Annex III high-risk AI systems mean for your training data pipeline</p>
+        <div class="post-meta">
+          <time class="post-date">June 4, 2026</time>
+          <span class="dot">·</span>
+          <div class="ptags"><span class="ptag">#eu-ai-act</span><span class="ptag">#data-governance</span><span class="ptag">#article-10</span><span class="ptag">#gdpr</span></div>
+        </div>
+      </div>
+    </header>
+    <div class="wrap">
+      <article class="prose">
+      <p>If your AI system falls under Annex III of the EU AI Act — hiring decisions, credit scoring, medical diagnosis, biometric identification, autonomous vehicles — Article 10 is not optional. It mandates how you collect, prepare, and document the data your models are trained on. For Chinese AI companies, this creates a specific tension: your training data often originates in China, under data practices that don't map cleanly onto EU requirements.</p>
+      <p>This post explains exactly what Article 10 demands, where Chinese AI companies typically fall short, and how Privacy-Enhancing Technologies close the gap without forcing you to rebuild your data pipeline from scratch.</p>
+      <hr />
+      <h2>What Article 10 actually requires</h2>
+      <p>Article 10 applies to any provider of a high-risk AI system listed in Annex III. It establishes six concrete obligations for training, validation, and test data:</p>
+      <ol><li><strong>Data governance practices</strong> — You must document how data was collected, selected, and processed. "We scraped the web" is not a governance practice.</li><li><strong>Examination for possible biases</strong> — The regulation explicitly requires examining data for biases that could lead to discrimination, particularly across geographic, demographic, or contextual dimensions. This is not just a fairness metric — it is a documented audit process.</li><li><strong>Identification of data gaps</strong> — You must identify where your data is insufficient to represent the population your model will operate on. A model trained on Chinese demographic data that will be deployed on European users has representational gaps that must be named and documented.</li><li><strong>Data preparation procedures</strong> — Labelling methodology, cleaning procedures, enrichment steps, and the criteria for including or excluding data must all be documented in a reproducible way.</li><li><strong>Assumptions about what the data represents</strong> — If your training data assumes certain behavioural patterns, cultural contexts, or user demographics, those assumptions must be made explicit.</li><li><strong>Assessment of data availability, quantity, and suitability</strong> — Why is this dataset appropriate for this use case? The burden of justification sits with the provider.</li></ol>
+      <p>These six points collectively require something most Chinese AI companies do not currently have: a formal, auditable data governance system that produces written documentation, not just internal engineering practices.</p>
+      <hr />
+      <h2>The four gaps Chinese companies consistently have</h2>
+      <p>From auditing AI pipelines as part of Mayfly's advisory work — and from my own time inside NEC Labs, NIO, and Alibaba — the same four gaps appear repeatedly:</p>
+      <p><strong>1. Training data documentation doesn't exist in EU-readable form.</strong> Chinese companies typically have internal data records, but they are in formats, languages, and at levels of granularity that don't meet EU standards. "We have a data team" is not Art.10 documentation.</p>
+      <p><strong>2. Bias examination is China-centric or absent.</strong> Models trained on Chinese user data are evaluated against Chinese demographic distributions. When deployed in Germany or France, they encounter a fundamentally different population distribution. The bias examination required by Art.10 must cover the EU deployment context — not just the original training context.</p>
+      <p><strong>3. Cross-border data origin creates a double bind.</strong> If your training data contains EU personal data that was transferred to China for processing, you now have overlapping obligations: GDPR Art.46 governs the original transfer (which required SCCs or BCRs), and Art.10 requires you to document that data's complete lineage. Producing that lineage documentation may conflict with Chinese DSL restrictions on what data records can cross borders.</p>
+      <p><strong>4. No data governance owner exists as a role.</strong> This is a compliance function, not just an engineering function. Someone needs to own the documentation, maintain it, and be accountable to regulators. In most Chinese AI companies with European operations, this person does not exist.</p>
+      <hr />
+      <h2>Why your Chinese training data is an Art.10 problem specifically</h2>
+      <p>Article 10 itself doesn't specify where training data must originate. But the moment Chinese-origin data becomes part of a training pipeline for an EU-deployed AI system, several other requirements activate simultaneously:</p>
+      <ul><li>If any training data contains EU residents' personal data that was transferred to China for processing, GDPR Art.46 applies to that transfer. The only available legal bases — SCCs, BCRs, or adequacy decisions — all require that the data importer (your Chinese operations) comply with GDPR-equivalent standards. China has no EU adequacy decision.</li></ul>
+      <ul><li>China's Data Security Law (DSL) classifies certain data categories as "important data" that cannot leave China without a government security assessment. For automotive companies, this includes map and sensor data. For others, it may include operational records that overlap with what Art.10 requires you to document.</li></ul>
+      <ul><li>This creates a genuine catch-22: Art.10 demands full transparency about your training data's origin and lineage. DSL may prohibit transmitting that lineage documentation across the Chinese border if it contains sensitive information.</li></ul>
+      <p>The catch-22 is not theoretical — it is the live operating reality for every Chinese AI company with significant EU deployment and Chinese training data.</p>
+      <hr />
+      <h2>How Privacy-Enhancing Technologies resolve this</h2>
+      <p>The three PET strategies that directly address the Art.10 compliance problem:</p>
+      <p><strong>Federated Learning.</strong> Train the EU-market model locally on EU data, without sending EU data to China. The Chinese training data stays in China and trains a China-specific model. Two separate models, each trained within their own jurisdiction, each with a clean data lineage that can be documented without cross-border conflicts.</p>
+      <p>The EU model's Art.10 documentation only needs to cover EU-sourced data — no DSL conflict arises. Model improvements can still flow between the two models through gradient aggregation, which (with appropriate Differential Privacy noise) does not constitute a transfer of personal data.</p>
+      <p><strong>Differential Privacy.</strong> Add calibrated noise during training so that the trained model cannot be used to reconstruct individual training records. The practical compliance benefit: your Art.10 documentation can describe the DP mechanism and privacy budget (ε) rather than exposing individual data records. A documented ε value is a mathematical guarantee that regulators can evaluate — it moves you from "trust us" to "verify this."</p>
+      <p><strong>Synthetic Data Generation.</strong> Generate synthetic data with the same statistical properties as the original Chinese dataset, then train on synthetic data in the EU. Synthetic data is not personal data under GDPR, which eliminates the Art.46 transfer concern and significantly reduces the Art.10 documentation burden. The primary requirement shifts from data lineage to synthetic data validation — demonstrating that the synthetic distribution is sufficiently faithful to the original.</p>
+      <p>Each of these approaches requires upfront engineering investment but avoids the alternative: attempting to produce Art.10-compliant documentation for Chinese training data in ways that conflict with Chinese law — a conflict that has no clean legal resolution.</p>
+      <hr />
+      <h2>The Art.10 compliance checklist</h2>
+      <p>What a high-risk AI system provider needs to have documented before EU market placement:</p>
+      <ul class="task"><li class=""><span class="cb"></span>Data inventory: origins, collection method, processing history for all training/validation/test data</li><li class=""><span class="cb"></span>Bias examination report covering EU demographic groups and deployment contexts</li><li class=""><span class="cb"></span>Data preparation procedures document: labelling standards, cleaning criteria, enrichment methodology</li><li class=""><span class="cb"></span>Cross-border transfer mechanism for any data that moved jurisdictions (SCC, BCR, or PET alternative)</li><li class=""><span class="cb"></span>Data governance owner appointed with documented responsibilities</li><li class=""><span class="cb"></span>Ongoing monitoring plan for training data drift post-deployment</li><li class=""><span class="cb"></span>Data retention and deletion schedule aligned with GDPR</li><li class=""><span class="cb"></span>Technical documentation bundle connecting Art.10 to Art.11 requirements</li></ul>
+      <hr />
+      <h2>What to do in the next 90 days</h2>
+      <p><strong>Week 1–2: Map your training data.</strong> List every dataset used in training, validation, and testing. For each: origin country, collection date, legal basis for processing, whether it contains EU personal data, and whether it has crossed any borders.</p>
+      <p><strong>Week 3–6: Run a bias examination.</strong> Take your EU deployment population and compare it to your training data's demographic coverage. Document the gaps. This doesn't require fixing everything immediately — it requires documenting what you found and what your mitigation plan is.</p>
+      <p><strong>Week 7–12: Choose a PET strategy.</strong> Based on your data flow map: if EU personal data is in your Chinese training pipeline, you need to eliminate that transfer (Federated Learning or synthetic data). If your training data documentation conflicts with DSL restrictions, synthetic data or FL separates the jurisdictions. Engage a technical advisor to scope the implementation.</p>
+      <p>If you're not sure where to start, <a href="https://mayfly.wiki" target="_blank" rel="noopener noreferrer">Mayfly's free compliance report</a> generates a company-specific assessment of your AI Act risk tier and data governance gaps in 2 minutes.</p>
+      <hr />
+      <p><em>Qifei Li is the founder of <a href="https://mayfly.wiki" target="_blank" rel="noopener noreferrer">Mayfly</a>, an EU AI Act compliance advisory specialising in Privacy-Enhancing Technologies for Chinese AI companies in Europe. Previously Research Scientist at NEC Laboratories Europe (Intel SGX / Federated Learning, IEEE ICDCS 2025) and Privacy Computing Researcher at Alibaba Group (Homomorphic Encryption, IEEE ICDE 2020). Based in Heidelberg, Germany.</em></p>
+      </article>
+    </div>
+    <div class="post-foot">
+      <div class="wrap"><a href="../../blog/index.html">← All writing</a></div>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="wrap footer-grid">
+      <div>
+        <div class="f-brand-mark">QL</div>
+        <span class="f-brand-name">Qifei Li</span>
+        <span class="f-brand-tag">// Security Engineer · Privacy Computing</span>
+        <p class="f-brand-loc">Heidelberg, Germany</p>
+      </div>
+      <div>
+        <p class="f-col-title">Site</p>
+        <nav class="f-nav">
+          <a href="../../index.html" class="f-link">Home</a>
+          <a href="../../blog/index.html" class="f-link">Blog</a>
+          <a href="../../about.html" class="f-link">About</a>
+          <a href="../../contact.html" class="f-link">Contact</a>
+        </nav>
+      </div>
+      <div>
+        <p class="f-col-title">Connect</p>
+        <nav class="f-nav">
+          <a href="mailto:hello@mayfly.wiki" class="f-link">Email</a>
+          <a href="https://github.com/7feilee" target="_blank" rel="noopener noreferrer" class="f-link">GitHub</a>
+          <a href="https://www.linkedin.com/in/qifei-li-99860112a/" target="_blank" rel="noopener noreferrer" class="f-link">LinkedIn</a>
+          <a href="https://x.com/7feilee" target="_blank" rel="noopener noreferrer" class="f-link">X / Twitter</a>
+        </nav>
+      </div>
+      <div>
+        <p class="f-col-title">Venture</p>
+        <a href="https://mayfly.wiki" target="_blank" rel="noopener noreferrer" class="f-venture">
+          <span class="f-venture-logo">MAYFLY</span>
+          <span class="f-venture-desc">EU AI Act compliance advisory for Chinese AI companies in Europe — using Privacy-Enhancing Technologies.</span>
+          <span class="f-venture-cta">Visit mayfly.wiki →</span>
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="wrap footer-bottom-inner">
+        <span>© 2026 Qifei Li</span><span class="sep">·</span>
+        <span>Heidelberg, Germany</span><span class="sep">·</span>
+        <a href="https://github.com/7feilee" target="_blank" rel="noopener noreferrer">Source on GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../site.js"></script>
+</body>
+</html>

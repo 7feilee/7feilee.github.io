@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tools — Qifei Li</title>
+  <meta name="description" content="Free browser-only tools by Qifei Li — EU AI Act Risk Classifier and HD Wallet Key Generator. No accounts, no data sent to servers." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="site.css" />
+  <style>
+    .tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 2.5rem; }
+    .tool-card { display: flex; flex-direction: column; gap: 0.85rem; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 2.2rem; transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s; position: relative; overflow: hidden; }
+    .tool-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--amber); opacity: 0; transition: opacity 0.25s; }
+    .tool-card:hover { transform: translateY(-3px); border-color: rgba(232,160,32,0.3); box-shadow: 0 16px 48px rgba(0,0,0,0.35); }
+    .tool-card:hover::before { opacity: 0.6; }
+    .tool-card.feat { border-color: rgba(6,182,212,0.2); }
+    .tool-card.feat::before { background: var(--teal); }
+    .tool-card.feat:hover { border-color: rgba(6,182,212,0.5); }
+    .th { display: flex; align-items: center; justify-content: space-between; }
+    .tico { font-size: 1.9rem; color: var(--amber); line-height: 1; }
+    .feat .tico { color: var(--teal); }
+    .tnew { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.25); padding: 0.16rem 0.55rem; border-radius: 20px; }
+    .tname { font-family: var(--font-display); font-size: 1.4rem; font-weight: 600; color: var(--text-1); line-height: 1.25; }
+    .tdesc { font-size: 0.88rem; color: var(--text-2); line-height: 1.7; flex: 1; }
+    .ttags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .ttags span { font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.05em; white-space: nowrap; color: var(--text-3); border: 1px solid var(--line); padding: 0.2rem 0.55rem; border-radius: var(--radius); }
+    .feat .ttags span { color: var(--teal); border-color: rgba(6,182,212,0.18); background: var(--teal-dim); }
+    .tcta { font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--amber); margin-top: 0.3rem; }
+    .feat .tcta { color: var(--teal); }
+    .tools-note { font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.04em; color: var(--text-3); text-align: center; line-height: 1.8; }
+    .tools-note a { color: var(--amber); text-decoration: underline; text-underline-offset: 3px; }
+    @media (max-width: 720px) { .tools-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="blueprint" aria-hidden="true"></div>
+  <div class="amb-glow a" aria-hidden="true"></div>
+  <div class="amb-glow t" aria-hidden="true"></div>
+
+  <nav id="nav">
+    <div class="wrap nav-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-mark">QL</span>
+        <span class="logo-name">Qifei&nbsp;Li</span>
+        <span class="logo-tag">// Privacy&nbsp;Computing</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="blog/index.html" class="nav-link">Blog</a></li>
+        <li><a href="tools.html" class="nav-link active">Tools</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+        <li><a href="https://mayfly.wiki" target="_blank" rel="noopener noreferrer" class="nav-venture"><span>MAYFLY</span> ↗</a></li>
+      </ul>
+      <button class="mobile-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span></button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html" class="mobile-link">Home</a>
+      <a href="blog/index.html" class="mobile-link">Blog</a>
+      <a href="tools.html" class="mobile-link">Tools</a>
+      <a href="about.html" class="mobile-link">About</a>
+      <a href="contact.html" class="mobile-link">Contact</a>
+      <a href="https://mayfly.wiki" target="_blank" rel="noopener noreferrer" class="mobile-link mv">MAYFLY — EU AI Act Advisory ↗</a>
+    </div>
+  </nav>
+  <header class="page-head">
+    <div class="wrap page-head-row">
+      <span class="page-head-idx">//</span>
+      <div>
+        <span class="page-kicker">Free Tools · Browser-Only</span>
+        <h1 class="page-h1">Tools</h1>
+        <p class="page-sub">No accounts · No data sent to any server · Open source on GitHub</p>
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="tools-grid">
+        <a href="ai-act-risk/index.html" class="tool-card feat" data-reveal>
+          <div class="th"><span class="tico">⚖</span><span class="tnew">New</span></div>
+          <h2 class="tname">EU AI Act Risk Classifier</h2>
+          <p class="tdesc">Determine your AI system's risk tier under the EU AI Act in 60 seconds. Get your compliance obligations, GPAI duties, Privacy-Enhancing Technology recommendations, and a cross-border PIPL × GDPR risk flag.</p>
+          <div class="ttags"><span>EU AI Act</span><span>Compliance</span><span>GPAI</span><span>PET</span></div>
+          <span class="tcta">Open classifier →</span>
+        </a>
+        <a href="hd-keygen/index.html" class="tool-card" data-reveal data-delay="1">
+          <div class="th"><span class="tico">⬡</span></div>
+          <h2 class="tname">HD Wallet Key Generator</h2>
+          <p class="tdesc">Generate Bitcoin, Ethereum, and Solana keys from a BIP39 recovery phrase. Everything runs inside your browser — no server, no accounts, works offline. Full derivation path control.</p>
+          <div class="ttags"><span>Crypto</span><span>BIP39</span><span>Self-custody</span></div>
+          <span class="tcta">Open generator →</span>
+        </a>
+      </div>
+      <p class="tools-note" data-reveal data-delay="2">All tools run entirely in your browser. No data is transmitted to any server.<br />Source available on <a href="https://github.com/7feilee" target="_blank" rel="noopener noreferrer">GitHub</a>.</p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap footer-grid">
+      <div>
+        <div class="f-brand-mark">QL</div>
+        <span class="f-brand-name">Qifei Li</span>
+        <span class="f-brand-tag">// Security Engineer · Privacy Computing</span>
+        <p class="f-brand-loc">Heidelberg, Germany</p>
+      </div>
+      <div>
+        <p class="f-col-title">Site</p>
+        <nav class="f-nav">
+          <a href="index.html" class="f-link">Home</a>
+          <a href="blog/index.html" class="f-link">Blog</a>
+          <a href="about.html" class="f-link">About</a>
+          <a href="contact.html" class="f-link">Contact</a>
+        </nav>
+      </div>
+      <div>
+        <p class="f-col-title">Connect</p>
+        <nav class="f-nav">
+          <a href="mailto:hello@mayfly.wiki" class="f-link">Email</a>
+          <a href="https://github.com/7feilee" target="_blank" rel="noopener noreferrer" class="f-link">GitHub</a>
+          <a href="https://www.linkedin.com/in/qifei-li-99860112a/" target="_blank" rel="noopener noreferrer" class="f-link">LinkedIn</a>
+          <a href="https://x.com/7feilee" target="_blank" rel="noopener noreferrer" class="f-link">X / Twitter</a>
+        </nav>
+      </div>
+      <div>
+        <p class="f-col-title">Venture</p>
+        <a href="https://mayfly.wiki" target="_blank" rel="noopener noreferrer" class="f-venture">
+          <span class="f-venture-logo">MAYFLY</span>
+          <span class="f-venture-desc">EU AI Act compliance advisory for Chinese AI companies in Europe — using Privacy-Enhancing Technologies.</span>
+          <span class="f-venture-cta">Visit mayfly.wiki →</span>
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="wrap footer-bottom-inner">
+        <span>© 2026 Qifei Li</span><span class="sep">·</span>
+        <span>Heidelberg, Germany</span><span class="sep">·</span>
+        <a href="https://astro.build" target="_blank" rel="noopener noreferrer">Built with Astro</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="site.js"></script>
+</body>
+</html>

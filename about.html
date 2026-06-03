@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Qifei Li</title>
+  <meta name="description" content="Qifei Li — Security Engineer & Privacy Computing Researcher. 10 years across NIO, NEC Labs, Alibaba. Based in Heidelberg, Germany." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="site.css" />
+  <style>
+    .content-grid { display: grid; grid-template-columns: 1fr 330px; gap: 4.5rem; align-items: start; }
+    .cblock { padding: 2.4rem 0; border-top: 1px solid var(--line); }
+    .cblock:first-child { padding-top: 0; border-top: none; }
+    .cblock-h { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1.1rem; }
+    .cblock-no { font-family: var(--font-mono); font-size: 0.72rem; color: var(--amber); letter-spacing: 0.05em; }
+    .cblock-t { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; color: var(--text-1); }
+    .body-p { font-size: 1rem; color: var(--text-2); line-height: 1.85; margin-bottom: 1.1rem; }
+    .body-p:last-child { margin-bottom: 0; }
+    .inline-link { color: var(--teal); text-decoration: underline; text-underline-offset: 3px; transition: opacity 0.2s; }
+    .inline-link:hover { opacity: 0.75; }
+    .edu-list { display: flex; flex-direction: column; gap: 1.4rem; }
+    .edu { border-left: 2px solid rgba(232,160,32,0.3); padding-left: 1.25rem; }
+    .edu-school { font-size: 0.98rem; font-weight: 600; color: var(--text-1); margin-bottom: 0.3rem; }
+    .edu-degree { font-size: 0.88rem; color: var(--text-2); margin-bottom: 0.3rem; }
+    .edu-meta { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-3); letter-spacing: 0.04em; }
+    .edu-meta .aw { color: var(--amber); }
+    .exp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .exp-cell { padding: 1.3rem 1.3rem 1.3rem 0; border-top: 1px solid var(--line); }
+    .exp-cell:nth-child(even) { padding-left: 1.3rem; border-left: 1px solid var(--line); }
+    .exp-cell h3 { font-family: var(--font-body); font-size: 0.9rem; font-weight: 600; color: var(--text-1); margin-bottom: 0.4rem; }
+    .exp-cell p { font-size: 0.82rem; color: var(--text-3); line-height: 1.6; }
+    .side { position: sticky; top: calc(var(--nav-h) + 1.5rem); display: flex; flex-direction: column; gap: 1rem; }
+    .side-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 1.5rem; }
+    .side-h3 { font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-3); margin-bottom: 1.1rem; }
+    .facts { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+    .facts li { display: flex; gap: 0.7rem; font-size: 0.85rem; color: var(--text-2); align-items: baseline; }
+    .facts .k { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); width: 56px; flex-shrink: 0; }
+    .pub-mini { padding: 0.8rem 0; border-bottom: 1px solid var(--line); }
+    .pub-mini:last-child { border-bottom: none; padding-bottom: 0; }
+    .pub-mini .v { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.05em; color: var(--amber); margin-bottom: 0.3rem; }
+    .pub-mini .t { font-size: 0.82rem; color: var(--text-2); line-height: 1.5; }
+    .venture-card { display: block; border: 1px solid rgba(6,182,212,0.18); background: rgba(6,182,212,0.03); border-radius: var(--radius-lg); padding: 1.5rem; transition: border-color 0.25s, background 0.25s; }
+    .venture-card:hover { border-color: rgba(6,182,212,0.4); background: var(--teal-dim); }
+    .venture-card .logo-w { font-family: var(--font-mono); font-size: 0.85rem; letter-spacing: 0.2em; color: var(--teal); display: block; margin-bottom: 0.6rem; }
+    .venture-card .d { font-size: 0.8rem; color: var(--text-3); line-height: 1.55; margin-bottom: 0.75rem; }
+    .venture-card .cta { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.05em; color: var(--teal); }
+    @media (max-width: 880px) { .content-grid { grid-template-columns: 1fr; gap: 2.5rem; } .side { position: static; } .exp-grid { grid-template-columns: 1fr; } .exp-cell:nth-child(even) { padding-left: 0; border-left: none; } }
+  </style>
+</head>
+<body>
+  <div class="blueprint" aria-hidden="true"></div>
+  <div class="amb-glow a" aria-hidden="true"></div>
+  <div class="amb-glow t" aria-hidden="true"></div>
+
+  <nav id="nav">
+    <div class="wrap nav-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-mark">QL</span>
+        <span class="logo-name">Qifei&nbsp;Li</span>
+        <span class="logo-tag">// Privacy&nbsp;Computing</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="blog/index.html" class="nav-link">Blog</a></li>
+        <li><a href="tools.html" class="nav-link">Tools</a></li>
+        <li><a href="about.html" class="nav-link active">About</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+        <li><a href="https://mayfly.wiki" target="_blank" rel="noopener noreferrer" class="nav-venture"><span>MAYFLY</span> ↗</a></li>
+      </ul>
+      <button class="mobile-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span></button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html" class="mobile-link">Home</a>
+      <a href="blog/index.html" class="mobile-link">Blog</a>
+      <a href="tools.html" class="mobile-link">Tools</a>
+      <a href="about.html" class="mobile-link">About</a>
+      <a href="contact.html" class="mobile-link">Contact</a>
+      <a href="https://mayfly.wiki" target="_blank" rel="noopener noreferrer" class="mobile-link mv">MAYFLY — EU AI Act Advisory ↗</a>
+    </div>
+  </nav>
+  <header class="page-head">
+    <div class="wrap page-head-row">
+      <span class="page-head-idx">//</span>
+      <div>
+        <span class="page-kicker">About</span>
+        <h1 class="page-h1">Qifei Li</h1>
+        <p class="page-sub">Security Engineer · Privacy Computing Researcher · Heidelberg, Germany</p>
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="wrap content-grid">
+      <div class="main-col">
+        <div class="cblock" data-reveal>
+          <div class="cblock-h"><span class="cblock-no">01</span><h2 class="cblock-t">Professional Journey</h2></div>
+          <p class="body-p">I'm a security engineer with over 10 years of experience spanning Europe and Asia. Most recently I led information security at NIO Inc. in Munich, where I transformed security operations through SIEM modernization and automation — achieving a 60% cost reduction and 80% improvement in mean time to response.</p>
+        </div>
+        <div class="cblock" data-reveal>
+          <div class="cblock-h"><span class="cblock-no">02</span><h2 class="cblock-t">Research &amp; Privacy Computing</h2></div>
+          <p class="body-p">My research focuses on privacy-enhancing technologies that let computation cross borders without data crossing borders. At NEC Labs Europe I built SGX-based secure AI inference systems. At Alibaba I pioneered HomoPAI — a production platform for privacy-preserving machine learning published at IEEE ICDE 2020.</p>
+          <p class="body-p">I founded <a href="https://mayfly.wiki" class="inline-link" target="_blank" rel="noopener noreferrer">Mayfly</a> to apply this research commercially: helping Chinese AI companies navigate EU AI Act compliance using PET (MPC, FL, TEE, HE) as the technical bridge across regulatory jurisdictions.</p>
+        </div>
+        <div class="cblock" data-reveal>
+          <div class="cblock-h"><span class="cblock-no">03</span><h2 class="cblock-t">Education</h2></div>
+          <div class="edu-list">
+            <div class="edu">
+              <div class="edu-school">哈尔滨工业大学 — Harbin Institute of Technology</div>
+              <div class="edu-degree">网络空间安全 工学硕士 · MSc Cybersecurity</div>
+              <div class="edu-meta">2018 – 2020 <span class="aw">· 2019 国家网络安全奖学金</span></div>
+            </div>
+            <div class="edu">
+              <div class="edu-school">哈尔滨工业大学 — Harbin Institute of Technology</div>
+              <div class="edu-degree">计算机科学与技术 工学学士 · BSc Computer Science</div>
+              <div class="edu-meta">2014 – 2018</div>
+            </div>
+          </div>
+        </div>
+        <div class="cblock" data-reveal>
+          <div class="cblock-h"><span class="cblock-no">04</span><h2 class="cblock-t">Expertise Areas</h2></div>
+          <div class="exp-grid">
+            <div class="exp-cell"><h3>Cryptography</h3><p>Homomorphic encryption, MPC, Zero-knowledge proofs, Intel SGX/TEEs</p></div>
+            <div class="exp-cell"><h3>Security Operations</h3><p>SIEM/SOAR, Microsoft Sentinel, incident response, threat modeling</p></div>
+            <div class="exp-cell"><h3>Privacy Research</h3><p>Federated learning, differential privacy, EU AI Act, secure aggregation</p></div>
+            <div class="exp-cell"><h3>CTF &amp; Competition</h3><p>Active competitor 2015–2019, national cybersecurity scholarship recipient</p></div>
+          </div>
+        </div>
+        <div class="cblock" data-reveal>
+          <div class="cblock-h"><span class="cblock-no">05</span><h2 class="cblock-t">Beyond Security</h2></div>
+          <p class="body-p">Based in Heidelberg, Germany. I organize Munich's Friday poker nights for a 30-member expat community — where game theory and social dynamics actually overlap. Fluent in Mandarin, English, and German.</p>
+        </div>
+      </div>
+
+      <aside class="side">
+        <div class="side-card" data-reveal>
+          <h3 class="side-h3">Quick Facts</h3>
+          <ul class="facts">
+            <li><span class="k">Base</span> Heidelberg, Germany</li>
+            <li><span class="k">Prev</span> Lead Security @ NIO Munich</li>
+            <li><span class="k">Prev</span> NEC Labs Europe</li>
+            <li><span class="k">Prev</span> Alibaba Group</li>
+            <li><span class="k">Pubs</span> 2 IEEE Publications</li>
+            <li><span class="k">Geo</span> DE · CN · LU</li>
+            <li><span class="k">Lang</span> EN · ZH · DE</li>
+          </ul>
+        </div>
+        <div class="side-card" data-reveal data-delay="1">
+          <h3 class="side-h3">Publications</h3>
+          <div class="pub-mini"><p class="v">IEEE ICDCS 2025</p><p class="t">LISA: Lightweight Single-Server Secure Aggregation with Robustness</p></div>
+          <div class="pub-mini"><p class="v">IEEE ICDE 2020</p><p class="t">HomoPAI: A Secure Collaborative Machine Learning Platform Based on Homomorphic Encryption</p></div>
+        </div>
+        <a href="https://mayfly.wiki" target="_blank" rel="noopener noreferrer" class="venture-card" data-reveal data-delay="2">
+          <span class="logo-w">MAYFLY</span>
+          <span class="d">EU AI Act compliance advisory for Chinese AI companies in Europe — using MPC, Federated Learning, TEE, and Homomorphic Encryption.</span>
+          <span class="cta">mayfly.wiki →</span>
+        </a>
+      </aside>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap footer-grid">
+      <div>
+        <div class="f-brand-mark">QL</div>
+        <span class="f-brand-name">Qifei Li</span>
+        <span class="f-brand-tag">// Security Engineer · Privacy Computing</span>
+        <p class="f-brand-loc">Heidelberg, Germany</p>
+      </div>
+      <div>
+        <p class="f-col-title">Site</p>
+        <nav class="f-nav">
+          <a href="index.html" class="f-link">Home</a>
+          <a href="blog/index.html" class="f-link">Blog</a>
+          <a href="about.html" class="f-link">About</a>
+          <a href="contact.html" class="f-link">Contact</a>
+        </nav>
+      </div>
+      <div>
+        <p class="f-col-title">Connect</p>
+        <nav class="f-nav">
+          <a href="mailto:hello@mayfly.wiki" class="f-link">Email</a>
+          <a href="https://github.com/7feilee" target="_blank" rel="noopener noreferrer" class="f-link">GitHub</a>
+          <a href="https://www.linkedin.com/in/qifei-li-99860112a/" target="_blank" rel="noopener noreferrer" class="f-link">LinkedIn</a>
+          <a href="https://x.com/7feilee" target="_blank" rel="noopener noreferrer" class="f-link">X / Twitter</a>
+        </nav>
+      </div>
+      <div>
+        <p class="f-col-title">Venture</p>
+        <a href="https://mayfly.wiki" target="_blank" rel="noopener noreferrer" class="f-venture">
+          <span class="f-venture-logo">MAYFLY</span>
+          <span class="f-venture-desc">EU AI Act compliance advisory for Chinese AI companies in Europe — using Privacy-Enhancing Technologies.</span>
+          <span class="f-venture-cta">Visit mayfly.wiki →</span>
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="wrap footer-bottom-inner">
+        <span>© 2026 Qifei Li</span><span class="sep">·</span>
+        <span>Heidelberg, Germany</span><span class="sep">·</span>
+        <a href="https://astro.build" target="_blank" rel="noopener noreferrer">Built with Astro</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="site.js"></script>
+</body>
+</html>

@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>EU AI Act Risk Classifier · Qifei Li</title>
+<meta name="description" content="Classify your AI system's risk tier under the EU AI Act in 60 seconds. Get compliance obligations and Privacy-Enhancing Technology recommendations. Free, browser-only."/>
+<link rel="canonical" href="https://7feilee.github.io/ai-act-risk/"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,500&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#07080f; --surface:#0e0f1c; --surface-2:#14152a;
+  --border:rgba(255,255,255,0.08); --border-2:rgba(255,255,255,0.14);
+  --amber:#e8a020; --amber-dim:rgba(232,160,32,0.12);
+  --teal:#06b6d4; --teal-dim:rgba(6,182,212,0.10);
+  --text-1:#edf0fb; --text-2:#9299be; --text-3:#555e88;
+  --green:#22c55e;
+  --r-prohibited:#ef4444; --r-prohibited-dim:rgba(239,68,68,0.10);
+  --r-high:#f59e0b; --r-high-dim:rgba(245,158,11,0.10);
+  --r-limited:#3b82f6; --r-limited-dim:rgba(59,130,246,0.10);
+  --r-minimal:#22c55e; --r-minimal-dim:rgba(34,197,94,0.10);
+  --font-display:'Fraunces',Georgia,serif;
+  --font-body:'DM Sans',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+  --radius:10px; --ease-out:cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-family:var(--font-body);-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text-1);min-height:100vh;
+  background-image:radial-gradient(circle,rgba(255,255,255,0.022) 1px,transparent 1px);
+  background-size:32px 32px}
+a{color:inherit;text-decoration:none}
+
+/* ── Header ─────────────────────────────────────────────────────── */
+header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(7,8,15,0.88);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:0 1.5rem;height:56px;
+  display:flex;align-items:center;justify-content:space-between;gap:1rem
+}
+.logo{display:flex;align-items:center;gap:0.5rem}
+.logo-name{font-family:var(--font-display);font-size:1rem;font-weight:600;color:var(--text-1)}
+.logo-sep{color:var(--amber);opacity:0.5}
+.logo-tool{font-family:var(--font-mono);font-size:0.65rem;color:var(--text-3);letter-spacing:0.04em}
+.header-back{font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.06em;
+  color:var(--text-3);border:1px solid var(--border);padding:0.3rem 0.75rem;
+  border-radius:20px;transition:color 0.2s,border-color 0.2s;white-space:nowrap}
+.header-back:hover{color:var(--text-1);border-color:var(--border-2)}
+
+/* ── Page wrapper ────────────────────────────────────────────────── */
+.page{max-width:720px;margin:0 auto;padding:3rem 1.5rem 5rem}
+
+/* ── Intro ──────────────────────────────────────────────────────── */
+.intro{text-align:center;margin-bottom:3rem}
+.intro-label{font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--amber);display:block;margin-bottom:1rem}
+.intro h1{font-family:var(--font-display);font-size:clamp(1.75rem,4vw,2.5rem);
+  font-weight:700;letter-spacing:-0.02em;color:var(--text-1);margin-bottom:0.75rem;line-height:1.15}
+.intro p{font-size:0.95rem;color:var(--text-2);max-width:480px;margin:0 auto;line-height:1.7}
+
+/* ── Progress ────────────────────────────────────────────────────── */
+.progress{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:3rem}
+.prog-step{display:flex;align-items:center;gap:0}
+.prog-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-mono);font-size:0.7rem;color:var(--text-3);
+  transition:all 0.3s var(--ease-out);flex-shrink:0}
+.prog-dot.active{border-color:var(--amber);color:var(--amber);background:var(--amber-dim)}
+.prog-dot.done{border-color:var(--green);background:rgba(34,197,94,0.12);color:var(--green)}
+.prog-label{font-family:var(--font-mono);font-size:0.62rem;letter-spacing:0.06em;
+  color:var(--text-3);margin:0 0.5rem;white-space:nowrap}
+.prog-label.active{color:var(--text-2)}
+.prog-line{width:40px;height:1px;background:var(--border);flex-shrink:0}
+.prog-line.done{background:rgba(34,197,94,0.4)}
+
+/* ── Step container ──────────────────────────────────────────────── */
+.step{display:none;animation:step-in 0.45s var(--ease-out) both}
+.step.active{display:block}
+@keyframes step-in{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.step-q{font-family:var(--font-display);font-size:1.35rem;font-weight:600;
+  color:var(--text-1);margin-bottom:0.5rem;line-height:1.3}
+.step-hint{font-size:0.85rem;color:var(--text-3);margin-bottom:1.75rem}
+
+/* ── Use case grid ───────────────────────────────────────────────── */
+.uc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin-bottom:1.75rem}
+.uc-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:0.9rem 1rem;cursor:pointer;transition:border-color 0.2s,background 0.2s;
+  display:flex;flex-direction:column;gap:0.2rem
+}
+.uc-card:hover{border-color:var(--border-2)}
+.uc-card.selected{border-color:var(--amber);background:var(--amber-dim)}
+.uc-card.prohibited-card.selected{border-color:var(--r-prohibited);background:var(--r-prohibited-dim)}
+.uc-name{font-size:0.875rem;font-weight:600;color:var(--text-1);line-height:1.3}
+.uc-sub{font-size:0.75rem;color:var(--text-3);line-height:1.4}
+.uc-badge{display:inline-block;font-family:var(--font-mono);font-size:0.58rem;
+  letter-spacing:0.08em;padding:0.1rem 0.4rem;border-radius:4px;margin-top:0.3rem;width:fit-content}
+.badge-prohibited{background:var(--r-prohibited-dim);color:var(--r-prohibited);border:1px solid rgba(239,68,68,0.2)}
+.badge-high{background:var(--r-high-dim);color:var(--r-high);border:1px solid rgba(245,158,11,0.2)}
+.badge-limited{background:var(--r-limited-dim);color:var(--r-limited);border:1px solid rgba(59,130,246,0.2)}
+.badge-minimal{background:var(--r-minimal-dim);color:var(--r-minimal);border:1px solid rgba(34,197,94,0.2)}
+
+/* ── Yes/No toggles ──────────────────────────────────────────────── */
+.toggle-group{display:flex;flex-direction:column;gap:0.85rem;margin-bottom:1.75rem}
+.toggle-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem 1.25rem}
+.toggle-q{font-size:0.9rem;font-weight:500;color:var(--text-1);margin-bottom:0.75rem;line-height:1.5}
+.toggle-btns{display:flex;gap:0.5rem}
+.t-btn{flex:1;padding:0.5rem;border:1px solid var(--border);border-radius:6px;
+  background:none;color:var(--text-2);font-family:var(--font-body);font-size:0.85rem;
+  cursor:pointer;transition:all 0.2s;text-align:center}
+.t-btn:hover{border-color:var(--border-2);color:var(--text-1)}
+.t-btn.selected-yes{border-color:var(--teal);background:var(--teal-dim);color:var(--teal)}
+.t-btn.selected-no{border-color:var(--border-2);background:rgba(255,255,255,0.04);color:var(--text-1)}
+
+/* ── Next button ─────────────────────────────────────────────────── */
+.btn-next{
+  width:100%;padding:0.8rem;background:var(--amber);color:#07080f;
+  border:none;border-radius:var(--radius);font-family:var(--font-body);
+  font-size:0.95rem;font-weight:600;cursor:pointer;
+  transition:background 0.2s,transform 0.2s,box-shadow 0.2s;
+}
+.btn-next:hover:not(:disabled){background:#f5c842;transform:translateY(-1px);box-shadow:0 8px 24px rgba(232,160,32,0.28)}
+.btn-next:disabled{opacity:0.35;cursor:not-allowed}
+
+/* ── Result ──────────────────────────────────────────────────────── */
+.result-tier{
+  border-radius:var(--radius);padding:1.75rem;margin-bottom:1.25rem;
+  border:1px solid var(--border);text-align:center
+}
+.tier-label{font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.14em;
+  text-transform:uppercase;margin-bottom:0.5rem;display:block}
+.tier-name{font-family:var(--font-display);font-size:2rem;font-weight:700;
+  letter-spacing:-0.02em;margin-bottom:0.4rem;line-height:1.1}
+.tier-sub{font-size:0.85rem;color:var(--text-2);line-height:1.5}
+
+.tier-prohibited{background:var(--r-prohibited-dim);border-color:rgba(239,68,68,0.25)}
+.tier-prohibited .tier-label,.tier-prohibited .tier-name{color:var(--r-prohibited)}
+.tier-high{background:var(--r-high-dim);border-color:rgba(245,158,11,0.25)}
+.tier-high .tier-label,.tier-high .tier-name{color:var(--r-high)}
+.tier-limited{background:var(--r-limited-dim);border-color:rgba(59,130,246,0.25)}
+.tier-limited .tier-label,.tier-limited .tier-name{color:var(--r-limited)}
+.tier-minimal{background:var(--r-minimal-dim);border-color:rgba(34,197,94,0.25)}
+.tier-minimal .tier-label,.tier-minimal .tier-name{color:var(--r-minimal)}
+
+.result-block{background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1.4rem 1.5rem;margin-bottom:1rem}
+.result-block-title{font-family:var(--font-mono);font-size:0.68rem;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--text-3);margin-bottom:1rem}
+.ob-list{display:flex;flex-direction:column;gap:0.6rem;list-style:none}
+.ob-list li{display:flex;align-items:flex-start;gap:0.75rem;font-size:0.875rem;color:var(--text-2);line-height:1.5}
+.ob-num{font-family:var(--font-mono);font-size:0.68rem;color:var(--amber);
+  min-width:20px;padding-top:0.15rem;flex-shrink:0}
+
+.pet-name{font-size:1.05rem;font-weight:600;color:var(--teal);margin-bottom:0.4rem}
+.pet-why{font-size:0.85rem;color:var(--text-2);line-height:1.6}
+
+.china-block{background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.2);
+  border-radius:var(--radius);padding:1.2rem 1.4rem;margin-bottom:1rem}
+.china-title{font-size:0.875rem;font-weight:600;color:var(--r-high);margin-bottom:0.4rem}
+.china-body{font-size:0.82rem;color:var(--text-2);line-height:1.6}
+
+/* ── Mayfly CTA ──────────────────────────────────────────────────── */
+.cta-block{
+  background:rgba(6,182,212,0.04);border:1px solid rgba(6,182,212,0.18);
+  border-radius:var(--radius);padding:1.5rem;position:relative;overflow:hidden;margin-bottom:1rem
+}
+.cta-block::before{content:'';position:absolute;inset:0 0 auto 0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(6,182,212,0.5),transparent)}
+.cta-brand{font-family:var(--font-mono);font-size:0.8rem;letter-spacing:0.2em;
+  color:var(--teal);display:block;margin-bottom:0.5rem}
+.cta-text{font-size:0.9rem;color:var(--text-2);line-height:1.6;margin-bottom:1.1rem}
+.cta-btn{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:var(--teal);color:#07080f;font-weight:600;font-size:0.875rem;
+  padding:0.6rem 1.3rem;border-radius:8px;
+  transition:background 0.2s,transform 0.2s
+}
+.cta-btn:hover{background:#22d3ee;transform:translateY(-1px)}
+
+.restart-btn{width:100%;padding:0.65rem;background:none;
+  border:1px solid var(--border);border-radius:var(--radius);
+  color:var(--text-3);font-family:var(--font-body);font-size:0.85rem;
+  cursor:pointer;transition:border-color 0.2s,color 0.2s;margin-top:0.5rem}
+.restart-btn:hover{border-color:var(--border-2);color:var(--text-1)}
+
+/* ── Footer ──────────────────────────────────────────────────────── */
+.tool-footer{
+  border-top:1px solid var(--border);padding:1.5rem;
+  text-align:center;font-size:0.75rem;color:var(--text-3);line-height:1.7
+}
+.tool-footer a{color:var(--amber);transition:opacity 0.2s}
+.tool-footer a:hover{opacity:0.7}
+
+/* ── Risk meter ──────────────────────────────────────────────────── */
+.risk-meter{display:flex;gap:4px;margin-bottom:1.25rem}
+.rm-seg{flex:1;border-radius:8px;padding:0.6rem 0.4rem;text-align:center;
+  border:1px solid var(--border);background:var(--surface);opacity:0.4;
+  transition:opacity 0.45s var(--ease-out),transform 0.45s var(--ease-out),border-color 0.45s,background 0.45s}
+.rm-cn{font-family:var(--font-body);font-size:0.8rem;font-weight:600;color:var(--text-1);line-height:1.2}
+.rm-en{font-family:var(--font-mono);font-size:0.56rem;letter-spacing:0.05em;color:var(--text-3);margin-top:3px}
+.rm-seg.active{opacity:1;transform:translateY(-3px)}
+.rm-minimal.active{border-color:rgba(34,197,94,0.4);background:var(--r-minimal-dim);box-shadow:0 0 18px rgba(34,197,94,0.12)}
+.rm-limited.active{border-color:rgba(59,130,246,0.4);background:var(--r-limited-dim);box-shadow:0 0 18px rgba(59,130,246,0.12)}
+.rm-high.active{border-color:rgba(245,158,11,0.4);background:var(--r-high-dim);box-shadow:0 0 18px rgba(245,158,11,0.12)}
+.rm-prohibited.active{border-color:rgba(239,68,68,0.4);background:var(--r-prohibited-dim);box-shadow:0 0 18px rgba(239,68,68,0.12)}
+
+/* ── Deadline tag ────────────────────────────────────────────────── */
+.deadline-tag{display:inline-flex;align-items:center;gap:0.5rem;
+  font-family:var(--font-mono);font-size:0.72rem;letter-spacing:0.03em;
+  color:var(--text-2);background:var(--surface-2);border:1px solid var(--border);
+  border-radius:6px;padding:0.4rem 0.85rem;margin-top:1rem}
+.deadline-tag.passed{color:var(--r-prohibited);border-color:rgba(239,68,68,0.25);background:var(--r-prohibited-dim)}
+
+/* ── GPAI block ──────────────────────────────────────────────────── */
+.gpai-block{background:var(--surface);border:1px solid var(--border-2);
+  border-radius:var(--radius);padding:1.3rem 1.5rem;margin-bottom:1rem}
+.gpai-title{font-family:var(--font-mono);font-size:0.68rem;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--amber);margin-bottom:0.6rem}
+.gpai-body{font-size:0.85rem;color:var(--text-2);line-height:1.65}
+.gpai-body strong{color:var(--text-1);font-weight:600}
+
+@media(max-width:580px){
+  .uc-grid{grid-template-columns:1fr}
+  .prog-label{display:none}
+  .prog-line{width:20px}
+  .rm-en{display:none}
+  .rm-cn{font-size:0.72rem}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <span class="logo-name">Qifei Li</span>
+    <span class="logo-sep">·</span>
+    <span class="logo-tool">EU AI Act Risk Classifier</span>
+  </div>
+  <a href="/" class="header-back">← 7feilee.github.io</a>
+</header>
+
+<div class="page">
+  <div class="intro">
+    <span class="intro-label">Free · Browser-only · No data sent anywhere</span>
+    <h1>EU AI Act<br/>Risk Classifier</h1>
+    <p>A few quick questions. Instant result — your risk tier, compliance obligations, GPAI duties, and the Privacy-Enhancing Technology that fits your AI system.</p>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress" id="progress">
+    <div class="prog-step">
+      <div class="prog-dot active" id="pd1">1</div>
+      <span class="prog-label active" id="pl1">Use Case</span>
+    </div>
+    <div class="prog-line" id="pline1"></div>
+    <div class="prog-step">
+      <div class="prog-dot" id="pd2">2</div>
+      <span class="prog-label" id="pl2">Context</span>
+    </div>
+    <div class="prog-line" id="pline2"></div>
+    <div class="prog-step">
+      <div class="prog-dot" id="pd3">3</div>
+      <span class="prog-label" id="pl3">Result</span>
+    </div>
+  </div>
+
+  <!-- Step 1: Use Case -->
+  <div class="step active" id="step1">
+    <p class="step-q">What is your AI system's primary function?</p>
+    <p class="step-hint">Select the option that best describes your main AI application.</p>
+
+    <div class="uc-grid" id="ucGrid"></div>
+
+    <button class="btn-next" id="btn1" disabled onclick="goStep2()">Continue →</button>
+  </div>
+
+  <!-- Step 2: Context -->
+  <div class="step" id="step2">
+    <p class="step-q">A few quick questions</p>
+    <p class="step-hint">These determine cross-border risk, GPAI obligations, and escalation factors.</p>
+
+    <div class="toggle-group">
+      <div class="toggle-item">
+        <p class="toggle-q">Does your company originate from China, or does your AI model train on data sourced from China?</p>
+        <div class="toggle-btns">
+          <button class="t-btn" id="tq1-yes" onclick="setToggle(1,'yes')">Yes</button>
+          <button class="t-btn" id="tq1-no"  onclick="setToggle(1,'no')">No</button>
+        </div>
+      </div>
+      <div class="toggle-item">
+        <p class="toggle-q">Does your AI make automated decisions that materially affect individual people — employment, credit, access to services, or health — without human review?</p>
+        <div class="toggle-btns">
+          <button class="t-btn" id="tq2-yes" onclick="setToggle(2,'yes')">Yes</button>
+          <button class="t-btn" id="tq2-no"  onclick="setToggle(2,'no')">No</button>
+        </div>
+      </div>
+      <div class="toggle-item">
+        <p class="toggle-q">Is your system built on — or does it fine-tune — a general-purpose / foundation model (e.g. an LLM or multimodal base model)?</p>
+        <div class="toggle-btns">
+          <button class="t-btn" id="tq3-yes" onclick="setToggle(3,'yes')">Yes</button>
+          <button class="t-btn" id="tq3-no"  onclick="setToggle(3,'no')">No</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-next" id="btn2" disabled onclick="showResult()">See Results →</button>
+  </div>
+
+  <!-- Step 3: Result -->
+  <div class="step" id="step3">
+    <div id="resultTier" class="result-tier"></div>
+    <div id="resultMeter" class="risk-meter"></div>
+    <div id="resultObligations" class="result-block"></div>
+    <div id="resultGpai" class="gpai-block" style="display:none"></div>
+    <div id="resultPet" class="result-block"></div>
+    <div id="resultChina" class="china-block" style="display:none"></div>
+    <div class="cta-block">
+      <span class="cta-brand">MAYFLY</span>
+      <p class="cta-text">
+        This classifier gives indicative guidance. For a company-specific compliance report covering your full data pipeline, cross-border risks, and a PET implementation roadmap — Mayfly's free report goes deeper.
+      </p>
+      <a href="https://mayfly.wiki" target="_blank" rel="noopener noreferrer" class="cta-btn">
+        Get free Mayfly report
+        <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H4M11 1V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <button class="restart-btn" onclick="restart()">← Classify another system</button>
+  </div>
+</div>
+
+<footer class="tool-footer">
+  This tool provides indicative guidance only and does not constitute legal advice. EU AI Act classification depends on deployment context, intended purpose, and national implementation. Consult a qualified legal advisor for formal compliance assessment.<br/>
+  Built by <a href="/">Qifei Li</a> · <a href="https://mayfly.wiki" target="_blank" rel="noopener noreferrer">mayfly.wiki</a> · EU AI Act Compliance Advisory
+</footer>
+
+<script>
+'use strict';
+
+// ── Data ─────────────────────────────────────────────────────────────────────
+
+var useCases = [
+  { id:'biometric-realtime', name:'Real-time biometric surveillance', sub:'Facial recognition in public spaces', tier:'prohibited', prohibited:true },
+  { id:'social-scoring',     name:'Social scoring / mass profiling',  sub:'AI-based scoring of citizens or groups', tier:'prohibited', prohibited:true },
+  { id:'biometric-id',       name:'Biometric identification',         sub:'Identity verification, face match, fingerprint', tier:'high' },
+  { id:'hr-hiring',          name:'Hiring & HR decisions',            sub:'CV screening, job matching, performance evaluation', tier:'high' },
+  { id:'credit-scoring',     name:'Credit & insurance scoring',       sub:'Loan assessment, risk scoring, insurance pricing', tier:'high' },
+  { id:'medical-ai',         name:'Medical diagnosis / health AI',    sub:'Clinical decision support, diagnostic AI', tier:'high' },
+  { id:'education',          name:'Education & assessment',           sub:'Exam scoring, student evaluation, admission decisions', tier:'high' },
+  { id:'autonomous',         name:'Autonomous vehicles / safety AI',  sub:'Self-driving, robotics in safety-critical environments', tier:'high' },
+  { id:'chatbot',            name:'Chatbot / conversational AI',      sub:'Customer service, virtual assistants, LLM-based tools', tier:'limited' },
+  { id:'content-gen',        name:'Content generation / AIGC',        sub:'Text, image, video generation, deepfakes', tier:'limited' },
+  { id:'emotion',            name:'Emotion recognition',              sub:'Emotion detection in faces, voice, or text', tier:'limited' },
+  { id:'recommendation',     name:'Recommendation & personalisation', sub:'Product, content, or ad recommendations', tier:'minimal' },
+  { id:'fraud',              name:'Fraud detection / cybersecurity',  sub:'Transaction monitoring, anomaly detection', tier:'minimal' },
+  { id:'general',            name:'General NLP / classification',     sub:'Search, translation, document AI, quality control', tier:'minimal' },
+];
+
+var tierMeta = {
+  prohibited: {
+    cls:'tier-prohibited', label:'EU AI Act — Article 5',
+    name:'PROHIBITED',
+    sub:'This use case is banned outright in the EU. The prohibition is absolute.',
+    deadline:'In force since 2 Feb 2025', passed:true
+  },
+  high: {
+    cls:'tier-high', label:'EU AI Act — Annex III',
+    name:'HIGH RISK',
+    sub:'Full compliance required before placing this system on the EU market.',
+    deadline:'Compliance deadline · 2 Aug 2026', passed:false
+  },
+  limited: {
+    cls:'tier-limited', label:'EU AI Act — Article 50',
+    name:'LIMITED RISK',
+    sub:'Transparency obligations apply. Disclose AI involvement to users.',
+    deadline:'Transparency rules apply · 2 Aug 2026', passed:false
+  },
+  minimal: {
+    cls:'tier-minimal', label:'EU AI Act — Minimal obligations',
+    name:'MINIMAL RISK',
+    sub:'No specific EU AI Act obligations. Standard GDPR applies for personal data.',
+    deadline:'No mandatory deadline', passed:false
+  }
+};
+
+var meterTiers = [
+  { key:'minimal',    cn:'Minimal',    en:'ART. 95',    cls:'rm-minimal' },
+  { key:'limited',    cn:'Limited',    en:'ART. 50',    cls:'rm-limited' },
+  { key:'high',       cn:'High',       en:'ANNEX III',  cls:'rm-high' },
+  { key:'prohibited', cn:'Prohibited', en:'ART. 5',     cls:'rm-prohibited' }
+];
+
+var obligationsByTier = {
+  prohibited: [
+    'Deployment is illegal under Article 5 from 2 August 2026.',
+    'Penalties up to €35 million or 7% of global annual turnover.',
+    'Immediate redesign or withdrawal from the EU market is required.',
+    'Note: PET cannot make a prohibited use case permissible — the prohibition is absolute.'
+  ],
+  high: [
+    'Risk management system throughout the full AI lifecycle (Art. 9)',
+    'Data governance for training, validation & test datasets (Art. 10)',
+    'Technical documentation before market placement (Art. 11)',
+    'Automatic event logging for audit purposes (Art. 12)',
+    'Transparency obligations: disclose system purpose to users (Art. 13)',
+    'Human oversight mechanisms must be built in (Art. 14)',
+    'Conformity assessment + registration in EU AI database (Art. 43)'
+  ],
+  limited: [
+    'Disclose to users that they are interacting with an AI system (Art. 50)',
+    'Label AI-generated content including deepfakes and synthetic media (Art. 50)',
+    'If training a foundation model: documentation, copyright transparency, energy use (Art. 53)'
+  ],
+  minimal: [
+    'No specific EU AI Act obligations apply to your system',
+    'Standard GDPR obligations remain in force for any personal data processed',
+    'Consider joining the voluntary Code of Conduct for AI (Art. 95)'
+  ]
+};
+
+var petByUseCase = {
+  'biometric-realtime': null,
+  'social-scoring':     null,
+  'biometric-id':   { name:'TEE — Trusted Execution Environment (Intel SGX)', why:'Run biometric inference inside a hardware-isolated secure enclave. Raw biometric data never leaves the device and is never accessible to the model operator — only the match result (yes/no) exits the enclave. Eliminates the need to store biometric templates centrally.' },
+  'hr-hiring':      { name:'Federated Learning', why:'Train your hiring model on distributed HR data across office locations without aggregating raw candidate records to a central server. Gradients — not personal data — are aggregated. With Differential Privacy added, the model reveals nothing about individual candidates.' },
+  'credit-scoring': { name:'Multi-Party Computation (MPC)', why:'Multiple parties (banks, credit bureaus) jointly compute a credit or risk score without revealing their raw financial records to each other. The score is computed mathematically from encrypted inputs — no raw data is shared across organisation boundaries.' },
+  'medical-ai':     { name:'Federated Learning + Differential Privacy', why:'Train diagnostic models across hospital data silos without transferring patient records. Differential Privacy adds calibrated noise that provides a mathematical guarantee bounding what can be inferred about any individual patient from the trained model.' },
+  'education':      { name:'Differential Privacy', why:'Apply DP during training to prevent the model from memorising individual student records. The DP privacy budget (ε) can be disclosed as evidence of your Art.10 data protection measures.' },
+  'autonomous':     { name:'Federated Learning', why:'Fleet learning from vehicle sensor data without routing raw video, LiDAR, or GPS traces to a central cloud. The Chinese vehicle fleet trains locally in China; EU fleet in the EU. Only aggregated model improvements cross borders — not personal location data.' },
+  'emotion':        { name:'TEE + Differential Privacy', why:'Process emotion signals inside a secure enclave (no raw biometric data retained); add DP to the output to prevent inference attacks that reconstruct individual emotional states from aggregate statistics.' },
+  'chatbot':        { name:'Differential Privacy on fine-tuning', why:'Apply DP during fine-tuning on user conversation data to limit memorisation. This reduces the risk of the model reproducing private user statements and limits training data exposure under Art. 10 documentation requirements.' },
+  'content-gen':    { name:'Differential Privacy', why:'DP training prevents the model from reproducing specific training examples (reducing copyright and personal data reproduction risk). Quantifiable DP parameters can be included in GPAI model documentation (Art. 53).' },
+  'recommendation': { name:'Federated Learning', why:'Personalise recommendations on-device without uploading user behaviour, preferences, or interaction history to a central server. The model improves from aggregate gradients — personal data never leaves the device.' },
+  'fraud':          { name:'Multi-Party Computation (MPC)', why:'Detect fraud patterns across institutions (banks, payment processors) without sharing raw transaction records. Shared fraud signals are computed over encrypted data — no raw customer data is ever disclosed.' },
+  'general':        { name:'Differential Privacy', why:'Add DP to your training pipeline as a baseline privacy guarantee for any personal data in your training corpus. Even for minimal-risk systems, DP demonstrates good-faith GDPR compliance for personal data used in ML.' }
+};
+
+// ── State ─────────────────────────────────────────────────────────────────────
+
+var selectedUC   = null;
+var toggles      = { 1: null, 2: null, 3: null };
+var togglesDone  = 0;
+
+// ── Build use case grid ───────────────────────────────────────────────────────
+
+var grid = document.getElementById('ucGrid');
+useCases.forEach(function(uc) {
+  var card = document.createElement('div');
+  card.className = 'uc-card' + (uc.prohibited ? ' prohibited-card' : '');
+  card.dataset.id = uc.id;
+  card.innerHTML =
+    '<span class="uc-name">' + uc.name + '</span>' +
+    '<span class="uc-sub">' + uc.sub + '</span>' +
+    '<span class="uc-badge badge-' + uc.tier + '">' + uc.tier.toUpperCase() + '</span>';
+  card.addEventListener('click', function() { selectUC(uc.id); });
+  grid.appendChild(card);
+});
+
+function selectUC(id) {
+  selectedUC = id;
+  document.querySelectorAll('.uc-card').forEach(function(c) {
+    c.classList.toggle('selected', c.dataset.id === id);
+  });
+  document.getElementById('btn1').disabled = false;
+}
+
+// ── Step navigation ───────────────────────────────────────────────────────────
+
+function goStep2() {
+  document.getElementById('step1').classList.remove('active');
+  document.getElementById('step2').classList.add('active');
+  updateProgress(2);
+}
+
+function setToggle(q, val) {
+  var prev = toggles[q];
+  toggles[q] = val;
+  if (!prev) togglesDone++;
+
+  var yesBtn = document.getElementById('tq' + q + '-yes');
+  var noBtn  = document.getElementById('tq' + q + '-no');
+  yesBtn.className = 't-btn' + (val === 'yes' ? ' selected-yes' : '');
+  noBtn.className  = 't-btn' + (val === 'no'  ? ' selected-no'  : '');
+
+  document.getElementById('btn2').disabled = (togglesDone < 3);
+}
+
+function showResult() {
+  document.getElementById('step2').classList.remove('active');
+  document.getElementById('step3').classList.add('active');
+  updateProgress(3);
+  renderResult();
+}
+
+function restart() {
+  selectedUC = null; toggles = {1:null,2:null,3:null}; togglesDone = 0;
+  document.querySelectorAll('.uc-card').forEach(function(c){c.classList.remove('selected')});
+  document.getElementById('btn1').disabled = true;
+  document.getElementById('btn2').disabled = true;
+  ['tq1-yes','tq1-no','tq2-yes','tq2-no','tq3-yes','tq3-no'].forEach(function(id){
+    document.getElementById(id).className = 't-btn';
+  });
+  document.getElementById('step3').classList.remove('active');
+  document.getElementById('step1').classList.add('active');
+  updateProgress(1);
+}
+
+// ── Progress bar ──────────────────────────────────────────────────────────────
+
+function updateProgress(step) {
+  [1,2,3].forEach(function(i) {
+    var dot = document.getElementById('pd'+i);
+    var lbl = document.getElementById('pl'+i);
+    if (i < step) {
+      dot.className = 'prog-dot done'; dot.textContent = '✓';
+      if(lbl) { lbl.className = 'prog-label'; }
+    } else if (i === step) {
+      dot.className = 'prog-dot active'; dot.textContent = i;
+      if(lbl) { lbl.className = 'prog-label active'; }
+    } else {
+      dot.className = 'prog-dot'; dot.textContent = i;
+      if(lbl) { lbl.className = 'prog-label'; }
+    }
+  });
+  [1,2].forEach(function(i) {
+    var line = document.getElementById('pline'+i);
+    if(line) line.className = 'prog-line' + (step > i ? ' done' : '');
+  });
+}
+
+// ── Render result ─────────────────────────────────────────────────────────────
+
+function renderResult() {
+  var uc   = useCases.find(function(u){ return u.id === selectedUC; });
+  var tier = uc ? uc.tier : 'minimal';
+  var meta = tierMeta[tier];
+  var obs  = obligationsByTier[tier];
+  var pet  = petByUseCase[selectedUC];
+  var chinaRisk = (toggles[1] === 'yes');
+  var autoDecisions = (toggles[2] === 'yes');
+  var gpai = (toggles[3] === 'yes');
+
+  // Escalate: limited + auto-decisions → add note
+  var tierNote = '';
+  if (tier === 'limited' && autoDecisions) {
+    tierNote = ' Note: automated individual decisions may also trigger GDPR Art. 22 (right to explanation).';
+  }
+  if (tier === 'minimal' && autoDecisions) {
+    tierNote = ' Note: if this system makes automated decisions about individuals, GDPR Art. 22 may apply — check with your DPO.';
+  }
+
+  // Risk tier card
+  document.getElementById('resultTier').className = 'result-tier ' + meta.cls;
+  document.getElementById('resultTier').innerHTML =
+    '<span class="tier-label">' + meta.label + '</span>' +
+    '<div class="tier-name">' + meta.name + '</div>' +
+    '<div class="tier-sub">' + meta.sub + (tierNote ? '<br/><em>' + tierNote + '</em>' : '') + '</div>' +
+    '<div class="deadline-tag' + (meta.passed ? ' passed' : '') + '">⏱ ' + meta.deadline + '</div>';
+
+  // Risk meter
+  var meterHTML = '';
+  meterTiers.forEach(function(m){
+    meterHTML += '<div class="rm-seg ' + m.cls + (m.key === tier ? ' active' : '') + '">' +
+      '<div class="rm-cn">' + m.cn + '</div><div class="rm-en">' + m.en + '</div></div>';
+  });
+  document.getElementById('resultMeter').innerHTML = meterHTML;
+
+  // Obligations
+  var obHTML = '<div class="result-block-title">Key Compliance Requirements</div><ul class="ob-list">';
+  obs.forEach(function(ob, i) {
+    obHTML += '<li><span class="ob-num">' + String(i+1).padStart(2,'0') + '</span>' + ob + '</li>';
+  });
+  obHTML += '</ul>';
+  document.getElementById('resultObligations').innerHTML = obHTML;
+
+  // GPAI additional obligations
+  var gpaiEl = document.getElementById('resultGpai');
+  if (gpai) {
+    gpaiEl.style.display = 'block';
+    gpaiEl.innerHTML =
+      '<div class="gpai-title">GPAI · Articles 53 &amp; 55</div>' +
+      '<p class="gpai-body">Because your system builds on a <strong>general-purpose AI model</strong>, GPAI provider obligations apply <strong>on top of</strong> your ' + meta.name.toLowerCase() + ' tier duties: maintain technical documentation, publish a summary of training content, implement a copyright policy, and pass information to downstream providers (Art. 53). If the model crosses the systemic-risk threshold (~10²⁵ FLOPs), add model evaluation, adversarial testing, incident reporting and cybersecurity protection (Art. 55). GPAI duties have applied since 2 Aug 2025.</p>';
+  } else {
+    gpaiEl.style.display = 'none';
+  }
+
+  // PET recommendation
+  var petHTML = '<div class="result-block-title">Privacy-Enhancing Technology Recommendation</div>';
+  if (!pet) {
+    petHTML += '<p class="pet-why" style="color:var(--r-prohibited)">No PET can make a prohibited use case permissible. The prohibition under Article 5 is absolute regardless of technical measures.</p>';
+  } else {
+    petHTML += '<div class="pet-name">' + pet.name + '</div><p class="pet-why">' + pet.why + '</p>';
+  }
+  document.getElementById('resultPet').innerHTML = petHTML;
+
+  // China cross-border flag
+  var chinaEl = document.getElementById('resultChina');
+  if (chinaRisk) {
+    chinaEl.style.display = 'block';
+    chinaEl.innerHTML =
+      '<div class="china-title">⚠ PIPL × GDPR Cross-Border Risk Detected</div>' +
+      '<p class="china-body">Your operations span Chinese and EU data jurisdictions. PIPL restricts data export from China; GDPR restricts data transfer to China without adequate safeguards (no adequacy decision exists for China). Additionally, China\'s Data Security Law (DSL) may prohibit disclosing the data lineage documentation that EU AI Act Art. 10 requires.<br/><br/>' +
+      'Federated Learning, MPC, and TEE-based processing are the primary engineering pathways that let you operate legally in both jurisdictions simultaneously — without sending personal data across the China↔EU border. <a href="https://mayfly.wiki" target="_blank" rel="noopener noreferrer" style="color:var(--teal);text-decoration:underline">Mayfly</a> specialises in exactly this architecture.</p>';
+  } else {
+    chinaEl.style.display = 'none';
+  }
+}
+</script>
+
+</body>
+</html>

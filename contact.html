@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Qifei Li</title>
+  <meta name="description" content="Get in touch with Qifei Li — security consulting, research collaboration, speaking engagements, or just to say hi." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="site.css" />
+  <style>
+    .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .channels { display: flex; flex-direction: column; }
+    .ch { display: grid; grid-template-columns: 44px 1fr auto; align-items: center; gap: 1.25rem; padding: 1.4rem 0; border-top: 1px solid var(--line); text-decoration: none; color: inherit; transition: padding-left 0.2s, border-color 0.2s; }
+    .ch:last-child { border-bottom: 1px solid var(--line); }
+    a.ch:hover { padding-left: 0.5rem; border-color: rgba(232,160,32,0.3); }
+    .ch-ico { width: 44px; height: 44px; display: grid; place-items: center; background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius); font-size: 1rem; color: var(--amber); font-family: var(--font-mono); }
+    .ch h3 { font-family: var(--font-body); font-size: 0.96rem; font-weight: 600; color: var(--text-1); margin-bottom: 0.15rem; }
+    .ch p { font-size: 0.78rem; color: var(--text-3); margin-bottom: 0.25rem; }
+    .ch .val { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.03em; color: var(--amber); }
+    .ch .arr { color: var(--text-3); font-size: 1rem; }
+    .ch.wechat { border-color: rgba(34,197,94,0.0); }
+    .ch.wechat .ch-ico { background: rgba(34,197,94,0.08); border-color: rgba(34,197,94,0.2); color: var(--green); font-family: var(--font-display); font-weight: 600; }
+    .ch.wechat .val { color: var(--green); }
+    .cright { display: flex; flex-direction: column; gap: 2.5rem; }
+    .iblock-h { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1.3rem; }
+    .iblock-no { font-family: var(--font-mono); font-size: 0.72rem; color: var(--amber); letter-spacing: 0.05em; }
+    .iblock-t { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; color: var(--text-1); }
+    .loc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; }
+    .loc { padding: 1.2rem; text-align: center; border-left: 1px solid var(--line); }
+    .loc:first-child { border-left: none; }
+    .loc .l { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3); margin-bottom: 0.5rem; }
+    .loc .v { font-size: 0.85rem; font-weight: 500; color: var(--text-1); margin-bottom: 0.2rem; }
+    .loc .s { font-size: 0.72rem; color: var(--text-3); }
+    .open-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.2rem; }
+    .open-list li { display: flex; gap: 0.7rem; font-size: 0.9rem; color: var(--text-2); line-height: 1.5; }
+    .open-list li::before { content: '—'; color: var(--amber); opacity: 0.6; }
+    .resp { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-3); letter-spacing: 0.03em; }
+    .mblock { display: block; background: rgba(6,182,212,0.03); border: 1px solid rgba(6,182,212,0.18); border-radius: var(--radius-lg); padding: 1.6rem; text-decoration: none; color: inherit; transition: border-color 0.25s, background 0.25s; }
+    .mblock:hover { border-color: rgba(6,182,212,0.4); background: var(--teal-dim); }
+    .mblock .top { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.7rem; }
+    .mblock .logo-w { font-family: var(--font-mono); font-size: 0.9rem; letter-spacing: 0.2em; color: var(--teal); }
+    .mblock .tag { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.08em; color: var(--text-3); border: 1px solid var(--line); padding: 0.14rem 0.5rem; border-radius: 20px; }
+    .mblock .d { font-size: 0.85rem; color: var(--text-2); line-height: 1.65; margin-bottom: 0.6rem; }
+    .mblock .cta { font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.05em; color: var(--teal); }
+    @media (max-width: 880px) { .contact-layout { grid-template-columns: 1fr; gap: 3rem; } }
+    @media (max-width: 520px) { .ch { grid-template-columns: 40px 1fr; } .ch .arr { display: none; } .loc-grid { grid-template-columns: 1fr; } .loc { border-left: none; border-top: 1px solid var(--line); } .loc:first-child { border-top: none; } }
+  </style>
+</head>
+<body>
+  <div class="blueprint" aria-hidden="true"></div>
+  <div class="amb-glow a" aria-hidden="true"></div>
+  <div class="amb-glow t" aria-hidden="true"></div>
+
+  <nav id="nav">
+    <div class="wrap nav-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-mark">QL</span>
+        <span class="logo-name">Qifei&nbsp;Li</span>
+        <span class="logo-tag">// Privacy&nbsp;Computing</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="blog/index.html" class="nav-link">Blog</a></li>
+        <li><a href="tools.html" class="nav-link">Tools</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="contact.html" class="nav-link active">Contact</a></li>
+        <li><a href="https://mayfly.wiki" target="_blank" rel="noopener noreferrer" class="nav-venture"><span>MAYFLY</span> ↗</a></li>
+      </ul>
+      <button class="mobile-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span></button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html" class="mobile-link">Home</a>
+      <a href="blog/index.html" class="mobile-link">Blog</a>
+      <a href="tools.html" class="mobile-link">Tools</a>
+      <a href="about.html" class="mobile-link">About</a>
+      <a href="contact.html" class="mobile-link">Contact</a>
+      <a href="https://mayfly.wiki" target="_blank" rel="noopener noreferrer" class="mobile-link mv">MAYFLY — EU AI Act Advisory ↗</a>
+    </div>
+  </nav>
+  <header class="page-head">
+    <div class="wrap page-head-row">
+      <span class="page-head-idx">//</span>
+      <div>
+        <span class="page-kicker">Contact</span>
+        <h1 class="page-h1">Let’s Connect</h1>
+        <p class="page-sub">Security consulting · Research collaboration · Speaking · Friday poker</p>
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="wrap contact-layout">
+      <div class="channels">
+        <a href="mailto:hello@mayfly.wiki" class="ch" data-reveal>
+          <div class="ch-ico">@</div>
+          <div><h3>Email</h3><p>Professional inquiries and collaborations</p><span class="val">hello@mayfly.wiki</span></div>
+          <span class="arr">→</span>
+        </a>
+        <a href="https://www.linkedin.com/in/qifei-li-99860112a/" target="_blank" rel="noopener noreferrer" class="ch" data-reveal data-delay="1">
+          <div class="ch-ico">in</div>
+          <div><h3>LinkedIn</h3><p>Professional networking</p><span class="val">linkedin.com/in/7feilee</span></div>
+          <span class="arr">↗</span>
+        </a>
+        <a href="https://github.com/7feilee" target="_blank" rel="noopener noreferrer" class="ch" data-reveal data-delay="2">
+          <div class="ch-ico">{ }</div>
+          <div><h3>GitHub</h3><p>Open source contributions and projects</p><span class="val">github.com/7feilee</span></div>
+          <span class="arr">↗</span>
+        </a>
+        <a href="https://x.com/7feilee" target="_blank" rel="noopener noreferrer" class="ch" data-reveal data-delay="3">
+          <div class="ch-ico">X</div>
+          <div><h3>X / Twitter</h3><p>Security insights and updates</p><span class="val">@7feilee</span></div>
+          <span class="arr">↗</span>
+        </a>
+        <div class="ch wechat" data-reveal data-delay="4">
+          <div class="ch-ico">微</div>
+          <div><h3>WeChat / 微信</h3><p>中文咨询 · AI Act合规、隐私计算、Mayfly服务</p><span class="val">flodysay</span></div>
+        </div>
+      </div>
+
+      <div class="cright">
+        <div data-reveal>
+          <div class="iblock-h"><span class="iblock-no">01</span><h2 class="iblock-t">Where to Find Me</h2></div>
+          <div class="loc-grid">
+            <div class="loc"><div class="l">Home</div><div class="v">Heidelberg</div><div class="s">CET / CEST</div></div>
+            <div class="loc"><div class="l">Work</div><div class="v">Munich</div><div class="s">Germany</div></div>
+            <div class="loc"><div class="l">Fridays</div><div class="v">Poker Club</div><div class="s">30+ members</div></div>
+          </div>
+        </div>
+        <div data-reveal data-delay="1">
+          <div class="iblock-h"><span class="iblock-no">02</span><h2 class="iblock-t">Open To</h2></div>
+          <ul class="open-list">
+            <li>Security consulting and advisory roles</li>
+            <li>Research collaborations in cryptography and PET</li>
+            <li>Speaking engagements on security and privacy topics</li>
+            <li>Technical writing and thought leadership</li>
+          </ul>
+          <p class="resp">// Typically responds within 48 hours for professional inquiries.</p>
+        </div>
+        <a href="https://mayfly.wiki" target="_blank" rel="noopener noreferrer" class="mblock" data-reveal data-delay="2">
+          <div class="top"><span class="logo-w">MAYFLY</span><span class="tag">EU AI Act Advisory</span></div>
+          <p class="d">Looking for EU AI Act compliance help for your AI company in Europe? Mayfly offers structured advisory packages using Privacy-Enhancing Technologies.</p>
+          <span class="cta">Get started at mayfly.wiki →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap footer-grid">
+      <div>
+        <div class="f-brand-mark">QL</div>
+        <span class="f-brand-name">Qifei Li</span>
+        <span class="f-brand-tag">// Security Engineer · Privacy Computing</span>
+        <p class="f-brand-loc">Heidelberg, Germany</p>
+      </div>
+      <div>
+        <p class="f-col-title">Site</p>
+        <nav class="f-nav">
+          <a href="index.html" class="f-link">Home</a>
+          <a href="blog/index.html" class="f-link">Blog</a>
+          <a href="about.html" class="f-link">About</a>
+          <a href="contact.html" class="f-link">Contact</a>
+        </nav>
+      </div>
+      <div>
+        <p class="f-col-title">Connect</p>
+        <nav class="f-nav">
+          <a href="mailto:hello@mayfly.wiki" class="f-link">Email</a>
+          <a href="https://github.com/7feilee" target="_blank" rel="noopener noreferrer" class="f-link">GitHub</a>
+          <a href="https://www.linkedin.com/in/qifei-li-99860112a/" target="_blank" rel="noopener noreferrer" class="f-link">LinkedIn</a>
+          <a href="https://x.com/7feilee" target="_blank" rel="noopener noreferrer" class="f-link">X / Twitter</a>
+        </nav>
+      </div>
+      <div>
+        <p class="f-col-title">Venture</p>
+        <a href="https://mayfly.wiki" target="_blank" rel="noopener noreferrer" class="f-venture">
+          <span class="f-venture-logo">MAYFLY</span>
+          <span class="f-venture-desc">EU AI Act compliance advisory for Chinese AI companies in Europe — using Privacy-Enhancing Technologies.</span>
+          <span class="f-venture-cta">Visit mayfly.wiki →</span>
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="wrap footer-bottom-inner">
+        <span>© 2026 Qifei Li</span><span class="sep">·</span>
+        <span>Heidelberg, Germany</span><span class="sep">·</span>
+        <a href="https://astro.build" target="_blank" rel="noopener noreferrer">Built with Astro</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="site.js"></script>
+</body>
+</html>
