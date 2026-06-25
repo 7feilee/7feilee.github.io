@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Writing — Knowledge Wikis · Qifei Li</title>
+  <meta name="description" content="Long-form, illustrated knowledge wikis built and hosted on GitHub Pages by Qifei Li — on business, capital, AI, media, society, travel, history, physics and AI agents." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="site.css" />
+  <style>
+    .page-head { padding-top: calc(var(--nav-h) + 4rem); }
+    .ph-kicker { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber); display: inline-flex; align-items: center; gap: 0.7rem; }
+    .ph-kicker::before { content: ''; width: 26px; height: 1px; background: var(--amber); opacity: 0.7; }
+    .ph-h1 { font-family: var(--font-display); font-size: clamp(2.6rem, 6vw, 4.6rem); font-weight: 600; letter-spacing: -0.03em; line-height: 0.98; color: var(--text-1); margin: 1.2rem 0 0; }
+    .ph-h1 em { font-style: italic; font-weight: 500; background: linear-gradient(115deg, var(--amber), var(--amber-2)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .ph-sub { font-size: 1.02rem; color: var(--text-2); line-height: 1.85; max-width: 60ch; margin: 1.6rem 0 0; }
+    .ph-sub b { color: var(--text-1); font-weight: 500; }
+    .ph-meta { display: flex; gap: 1.6rem; flex-wrap: wrap; margin-top: 1.8rem; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.06em; color: var(--text-3); text-transform: uppercase; }
+    .ph-meta b { color: var(--amber); font-weight: 500; }
+
+    .cat-label { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-3); display: flex; align-items: center; gap: 0.9rem; margin: 2.6rem 0 1.1rem; }
+    .cat-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+    .cat-label .n { color: var(--teal); }
+
+    .wiki-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    @media (max-width: 900px) { .wiki-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .wiki-grid { grid-template-columns: 1fr; } }
+    .wcard {
+      display: flex; flex-direction: column; gap: 0.7rem; padding: 1.6rem 1.6rem 1.4rem;
+      background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg);
+      transition: border-color 0.25s var(--ease-out), transform 0.25s var(--ease-out); position: relative; overflow: hidden;
+    }
+    .wcard::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: linear-gradient(180deg, var(--amber), transparent); opacity: 0; transition: opacity 0.25s; }
+    .wcard:hover { transform: translateY(-3px); border-color: rgba(232,160,32,0.32); }
+    .wcard:hover::before { opacity: 1; }
+    .wcard-top { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+    .wcard-ico { font-size: 1.5rem; line-height: 1; }
+    .wcard-host { font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.06em; color: var(--text-3); text-transform: lowercase; }
+    .wcard-h { font-family: var(--font-display); font-size: 1.22rem; font-weight: 600; color: var(--text-1); line-height: 1.2; }
+    .wcard-en { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.04em; color: var(--teal); margin-top: -0.25rem; }
+    .wcard-p { font-size: 0.83rem; color: var(--text-3); line-height: 1.65; flex: 1; }
+    .wcard-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .wtag { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.04em; color: var(--text-3); border: 1px solid var(--line); padding: 0.16rem 0.5rem; border-radius: 20px; }
+    .wcard-go { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--amber); display: inline-flex; align-items: center; gap: 0.45rem; transition: gap 0.2s; }
+    .wcard:hover .wcard-go { gap: 0.75rem; }
+
+    .note { margin-top: 2.8rem; padding: 1.4rem 1.6rem; border: 1px dashed var(--line-2); border-radius: var(--radius-lg); background: var(--bg-2); font-size: 0.84rem; color: var(--text-3); line-height: 1.7; }
+    .note b { color: var(--text-2); font-weight: 500; }
+    .note a { color: var(--amber); }
+  </style>
+</head>
+<body>
+
+  <div class="blueprint" aria-hidden="true"></div>
+  <div class="amb-glow a" aria-hidden="true"></div>
+  <div class="amb-glow t" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="wrap nav-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-mark">QL</span>
+        <span class="logo-name">Qifei&nbsp;Li</span>
+        <span class="logo-tag">// Privacy&nbsp;Computing</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="blog/index.html" class="nav-link">Blog</a></li>
+        <li><a href="writing.html" class="nav-link active">Writing</a></li>
+        <li><a href="tools.html" class="nav-link">Tools</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+        <li><a href="https://mayfly.wiki" target="_blank" rel="noopener noreferrer" class="nav-venture"><span>MAYFLY</span> ↗</a></li>
+      </ul>
+      <button class="mobile-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span></button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html" class="mobile-link">Home</a>
+      <a href="blog/index.html" class="mobile-link">Blog</a>
+      <a href="writing.html" class="mobile-link">Writing</a>
+      <a href="tools.html" class="mobile-link">Tools</a>
+      <a href="about.html" class="mobile-link">About</a>
+      <a href="contact.html" class="mobile-link">Contact</a>
+      <a href="https://mayfly.wiki" target="_blank" rel="noopener noreferrer" class="mobile-link mv">MAYFLY — EU AI Act Advisory ↗</a>
+    </div>
+  </nav>
+
+  <!-- HEAD -->
+  <header class="wrap page-head">
+    <span class="ph-kicker">Writing · Knowledge Wikis</span>
+    <h1 class="ph-h1">Things I <em>build to understand</em></h1>
+    <p class="ph-sub">
+      Outside of security work, I write long-form, heavily-researched wikis — mostly in Chinese — and host
+      them as static sites on <b>GitHub Pages</b>. Each one is an attempt to <b>map a domain end to end</b>:
+      business, capital, AI infrastructure, media power, society, travel, physics. All open-source,
+      illustrated, and free to read.
+    </p>
+    <div class="ph-meta">
+      <span><b>9</b> live wikis</span>
+      <span><b>200+</b> chapters</span>
+      <span><b>CN</b> primary · EN terms</span>
+      <span>hosted on <b>github pages</b></span>
+    </div>
+  </header>
+
+  <!-- WIKIS -->
+  <section class="section" style="padding-top:2.5rem">
+    <div class="wrap">
+
+      <div class="cat-label"><span class="n">01</span> Business · Capital · AI</div>
+      <div class="wiki-grid">
+        <a class="wcard" href="https://7feilee.github.io/ai-industrial-explosion/" target="_blank" rel="noopener" data-reveal>
+          <div class="wcard-top"><span class="wcard-ico">⚡</span><span class="wcard-host">github.io/ai-industrial-explosion</span></div>
+          <div><div class="wcard-h">AI 工业大爆炸</div><div class="wcard-en">The AI Industrial Explosion</div></div>
+          <p class="wcard-p">从芯片到电力，拆解 AI 的实体价值链（GPU / 存储 HBM / 数据中心 / 电网）、板块价值重塑、对 VC 与个人投资者的好与坏，以及后 AI 时代的工作与生意。</p>
+          <div class="wcard-tags"><span class="wtag">半导体</span><span class="wtag">HBM</span><span class="wtag">电力</span><span class="wtag">投资</span></div>
+          <span class="wcard-go">Read ↗</span>
+        </a>
+        <a class="wcard" href="https://7feilee.github.io/capital-atlas/" target="_blank" rel="noopener" data-reveal data-delay="1">
+          <div class="wcard-top"><span class="wcard-ico">💰</span><span class="wcard-host">github.io/capital-atlas</span></div>
+          <div><div class="wcard-h">资本有国界吗？</div><div class="wcard-en">Global Capital Atlas</div></div>
+          <p class="wcard-p">全球资本图鉴：主权基金、资管巨头、私募与风投、家族财阀、加密与稳定币——按国家与类型拆解"谁的钱、有多少、投向哪"。</p>
+          <div class="wcard-tags"><span class="wtag">主权基金</span><span class="wtag">VC</span><span class="wtag">家族财阀</span><span class="wtag">加密</span></div>
+          <span class="wcard-go">Read ↗</span>
+        </a>
+        <a class="wcard" href="https://7feilee.github.io/business-insights/" target="_blank" rel="noopener" data-reveal data-delay="2">
+          <div class="wcard-top"><span class="wcard-ico">📦</span><span class="wcard-host">github.io/business-insights</span></div>
+          <div><div class="wcard-h">你没见过的东西</div><div class="wcard-en">Business Insights Handbook</div></div>
+          <p class="wcard-p">一部商业认知手册：29 章 + 术语表，用一套"母模式 A–L"拆解商业世界里那些没被明说、却反复奏效的底层规律。</p>
+          <div class="wcard-tags"><span class="wtag">商业认知</span><span class="wtag">29 章</span><span class="wtag">手册</span></div>
+          <span class="wcard-go">Read ↗</span>
+        </a>
+      </div>
+
+      <div class="cat-label"><span class="n">02</span> Media · Society · Privacy</div>
+      <div class="wiki-grid">
+        <a class="wcard" href="https://7feilee.github.io/media-power-atlas/" target="_blank" rel="noopener" data-reveal>
+          <div class="wcard-top"><span class="wcard-ico">📰</span><span class="wcard-host">github.io/media-power-atlas</span></div>
+          <div><div class="wcard-h">媒体权力图谱</div><div class="wcard-en">Media Power Atlas</div></div>
+          <p class="wcard-p">线上媒体分类、背后的金主与资本、左与右的立场（引用第三方评级），以及 AI 时代的新型宣传——聊天机器人与 AI 搜索如何成为新的信息守门人。中立的媒体素养。</p>
+          <div class="wcard-tags"><span class="wtag">媒体所有权</span><span class="wtag">左/右</span><span class="wtag">AI 宣传</span></div>
+          <span class="wcard-go">Read ↗</span>
+        </a>
+        <a class="wcard" href="https://7feilee.github.io/seven-sins/" target="_blank" rel="noopener" data-reveal data-delay="1">
+          <div class="wcard-top"><span class="wcard-ico">😈</span><span class="wcard-host">github.io/seven-sins</span></div>
+          <div><div class="wcard-h">原罪与算法</div><div class="wcard-en">Seven Sins × Algorithms</div></div>
+          <p class="wcard-p">互联网如何把"七宗罪"工业化——用产品设计和算法放大人性弱点来攫取注意力与数据；以及你如何逐层堵住泄漏点、夺回隐私。</p>
+          <div class="wcard-tags"><span class="wtag">注意力经济</span><span class="wtag">暗黑模式</span><span class="wtag">隐私自保</span></div>
+          <span class="wcard-go">Read ↗</span>
+        </a>
+        <a class="wcard" href="https://7feilee.github.io/world-peoples/" target="_blank" rel="noopener" data-reveal data-delay="2">
+          <div class="wcard-top"><span class="wcard-ico">🌏</span><span class="wcard-host">github.io/world-peoples</span></div>
+          <div><div class="wcard-h">世界民族与社会结构志</div><div class="wcard-en">Peoples & Social Structures</div></div>
+          <p class="wcard-p">30 章，梳理世界各主要民族的源流、社会结构与文化逻辑——一部读起来不枯燥的"民族与社会"参考书。</p>
+          <div class="wcard-tags"><span class="wtag">民族</span><span class="wtag">社会结构</span><span class="wtag">30 章</span></div>
+          <span class="wcard-go">Read ↗</span>
+        </a>
+      </div>
+
+      <div class="cat-label"><span class="n">03</span> Travel · History · Science</div>
+      <div class="wiki-grid">
+        <a class="wcard" href="https://7feilee.github.io/europe-travel/" target="_blank" rel="noopener" data-reveal>
+          <div class="wcard-top"><span class="wcard-ico">🏛️</span><span class="wcard-host">github.io/europe-travel</span></div>
+          <div><div class="wcard-h">与君王同游</div><div class="wcard-en">Hardcore Europe Travel</div></div>
+          <p class="wcard-p">一部硬核、反社媒打卡的欧洲旅游攻略：30+ 城市，每个目的地配一位最有个性的君王做向导——带着历史与防坑知识，玩回你花的每一分钱。</p>
+          <div class="wcard-tags"><span class="wtag">欧洲</span><span class="wtag">君王史</span><span class="wtag">防坑</span></div>
+          <span class="wcard-go">Read ↗</span>
+        </a>
+        <a class="wcard" href="https://7feilee.github.io/physics-lab/" target="_blank" rel="noopener" data-reveal data-delay="1">
+          <div class="wcard-top"><span class="wcard-ico">🔬</span><span class="wcard-host">github.io/physics-lab</span></div>
+          <div><div class="wcard-h">Physica · 互动物理实验室</div><div class="wcard-en">Interactive Physics Lab</div></div>
+          <p class="wcard-p">一个互动物理学习平台：9 条主线 / 70 节课 / 21 个 canvas 模拟——把抽象的物理变成可以亲手调参、亲眼看见的实验。</p>
+          <div class="wcard-tags"><span class="wtag">物理</span><span class="wtag">交互模拟</span><span class="wtag">canvas</span></div>
+          <span class="wcard-go">Open ↗</span>
+        </a>
+        <a class="wcard" href="https://7feilee.github.io/claude-code-playbook/" target="_blank" rel="noopener" data-reveal data-delay="2">
+          <div class="wcard-top"><span class="wcard-ico">◈</span><span class="wcard-host">github.io/claude-code-playbook</span></div>
+          <div><div class="wcard-h">Claude Code Playbook</div><div class="wcard-en">AI Agent Best Practices</div></div>
+          <p class="wcard-p">一个交互式指南：用 AI agent 做编码、营销、大型系统规划的最佳实践——上下文工程、规格驱动设计、多智能体编排，含可复制的提示词与反模式。</p>
+          <div class="wcard-tags"><span class="wtag">AI agent</span><span class="wtag">交互式</span><span class="wtag">spec-driven</span></div>
+          <span class="wcard-go">Open ↗</span>
+        </a>
+      </div>
+
+      <div class="note">
+        <b>关于这些 wiki</b> — 它们大多是用 Docsify 搭建的静态站，托管在 GitHub Pages 上，源码均在
+        <a href="https://github.com/7feilee" target="_blank" rel="noopener">github.com/7feilee</a>。
+        内容力求硬核、中立、可溯源；行业数据变动快，以各自最新公开披露为准，<b>不构成任何投资或职业建议</b>。
+        欢迎在各仓库提 issue 纠错。
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="wrap footer-grid">
+      <div>
+        <div class="f-brand-mark">QL</div>
+        <span class="f-brand-name">Qifei Li</span>
+        <span class="f-brand-tag">// Security Engineer · Privacy Computing</span>
+        <p class="f-brand-loc">Heidelberg, Germany</p>
+      </div>
+      <div>
+        <p class="f-col-title">Site</p>
+        <nav class="f-nav">
+          <a href="index.html" class="f-link">Home</a>
+          <a href="blog/index.html" class="f-link">Blog</a>
+          <a href="writing.html" class="f-link">Writing</a>
+          <a href="about.html" class="f-link">About</a>
+          <a href="contact.html" class="f-link">Contact</a>
+        </nav>
+      </div>
+      <div>
+        <p class="f-col-title">Connect</p>
+        <nav class="f-nav">
+          <a href="mailto:hello@mayfly.wiki" class="f-link">Email</a>
+          <a href="https://github.com/7feilee" target="_blank" rel="noopener noreferrer" class="f-link">GitHub</a>
+          <a href="https://www.linkedin.com/in/qifei-li-99860112a/" target="_blank" rel="noopener noreferrer" class="f-link">LinkedIn</a>
+          <a href="https://x.com/7feilee" target="_blank" rel="noopener noreferrer" class="f-link">X / Twitter</a>
+        </nav>
+      </div>
+      <div>
+        <p class="f-col-title">Venture</p>
+        <a href="https://mayfly.wiki" target="_blank" rel="noopener noreferrer" class="f-venture">
+          <span class="f-venture-logo">MAYFLY</span>
+          <span class="f-venture-desc">EU AI Act compliance advisory for Chinese AI companies in Europe — using Privacy-Enhancing Technologies.</span>
+          <span class="f-venture-cta">Visit mayfly.wiki →</span>
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="wrap footer-bottom-inner">
+        <span>© 2026 Qifei Li</span><span class="sep">·</span>
+        <span>Heidelberg, Germany</span><span class="sep">·</span>
+        <a href="https://astro.build" target="_blank" rel="noopener noreferrer">Built with Astro</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="site.js"></script>
+</body>
+</html>

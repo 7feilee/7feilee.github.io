@@ -183,6 +183,28 @@
     @media (max-width: 640px) { .pub { grid-template-columns: 1fr; gap: 0.4rem; } .pub-yr { display: none; } }
 
     @media (max-width: 820px) { .about-layout { grid-template-columns: 1fr; gap: 2.5rem; } }
+
+    /* ── Wikis ────────────────────────────────────────────── */
+    .wiki-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    @media (max-width: 900px) { .wiki-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .wiki-grid { grid-template-columns: 1fr; } }
+    .wcard {
+      display: flex; flex-direction: column; gap: 0.65rem; padding: 1.5rem 1.5rem 1.3rem;
+      background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg);
+      transition: border-color 0.25s var(--ease-out), transform 0.25s var(--ease-out); position: relative; overflow: hidden;
+    }
+    .wcard::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: linear-gradient(180deg, var(--amber), transparent); opacity: 0; transition: opacity 0.25s; }
+    .wcard:hover { transform: translateY(-3px); border-color: rgba(232,160,32,0.32); }
+    .wcard:hover::before { opacity: 1; }
+    .wcard-top { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+    .wcard-ico { font-size: 1.45rem; line-height: 1; }
+    .wcard-host { font-family: var(--font-mono); font-size: 0.57rem; letter-spacing: 0.05em; color: var(--text-3); }
+    .wcard-h { font-family: var(--font-display); font-size: 1.18rem; font-weight: 600; color: var(--text-1); line-height: 1.2; }
+    .wcard-en { font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.04em; color: var(--teal); margin-top: -0.2rem; }
+    .wcard-p { font-size: 0.82rem; color: var(--text-3); line-height: 1.6; flex: 1; }
+    .wcard-go { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--amber); display: inline-flex; align-items: center; gap: 0.45rem; transition: gap 0.2s; }
+    .wcard:hover .wcard-go { gap: 0.75rem; }
+    .wiki-cta { display: flex; justify-content: center; margin-top: 1.6rem; }
   </style>
 </head>
 <body>
@@ -202,6 +224,7 @@
       <ul class="nav-links">
         <li><a href="index.html" class="nav-link active">Home</a></li>
         <li><a href="blog/index.html" class="nav-link">Blog</a></li>
+        <li><a href="writing.html" class="nav-link">Writing</a></li>
         <li><a href="tools.html" class="nav-link">Tools</a></li>
         <li><a href="about.html" class="nav-link">About</a></li>
         <li><a href="contact.html" class="nav-link">Contact</a></li>
@@ -212,6 +235,7 @@
     <div class="mobile-menu" id="mobileMenu">
       <a href="index.html" class="mobile-link">Home</a>
       <a href="blog/index.html" class="mobile-link">Blog</a>
+      <a href="writing.html" class="mobile-link">Writing</a>
       <a href="tools.html" class="mobile-link">Tools</a>
       <a href="about.html" class="mobile-link">About</a>
       <a href="contact.html" class="mobile-link">Contact</a>
@@ -429,6 +453,82 @@
     </div>
   </section>
 
+  <!-- WIKIS -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-top">
+        <span class="sec-index">06</span>
+        <div class="sec-headings">
+          <span class="sec-kicker">Writing · Knowledge Wikis</span>
+          <h2 class="sec-h2">Things I <em>build to understand</em></h2>
+        </div>
+      </div>
+      <p class="body-p" style="max-width:60ch;margin-bottom:2rem">
+        Outside of security work, I write long-form, heavily-researched wikis — mostly in Chinese — and host
+        them as static sites on GitHub Pages. <span style="color:var(--text-2)">9 live, 200+ chapters.</span>
+      </p>
+      <div class="wiki-grid">
+        <a class="wcard" href="https://7feilee.github.io/ai-industrial-explosion/" target="_blank" rel="noopener" data-reveal>
+          <div class="wcard-top"><span class="wcard-ico">⚡</span><span class="wcard-host">/ai-industrial-explosion</span></div>
+          <div><div class="wcard-h">AI 工业大爆炸</div><div class="wcard-en">The AI Industrial Explosion</div></div>
+          <p class="wcard-p">从芯片到电力，AI 的实体价值链、板块重塑、对投资者的好与坏、后 AI 时代的饭碗。</p>
+          <span class="wcard-go">Read ↗</span>
+        </a>
+        <a class="wcard" href="https://7feilee.github.io/capital-atlas/" target="_blank" rel="noopener" data-reveal data-delay="1">
+          <div class="wcard-top"><span class="wcard-ico">💰</span><span class="wcard-host">/capital-atlas</span></div>
+          <div><div class="wcard-h">资本有国界吗？</div><div class="wcard-en">Global Capital Atlas</div></div>
+          <p class="wcard-p">全球资本图鉴：主权基金、VC、家族财阀、加密与稳定币——谁的钱、有多少、投向哪。</p>
+          <span class="wcard-go">Read ↗</span>
+        </a>
+        <a class="wcard" href="https://7feilee.github.io/media-power-atlas/" target="_blank" rel="noopener" data-reveal data-delay="2">
+          <div class="wcard-top"><span class="wcard-ico">📰</span><span class="wcard-host">/media-power-atlas</span></div>
+          <div><div class="wcard-h">媒体权力图谱</div><div class="wcard-en">Media Power Atlas</div></div>
+          <p class="wcard-p">媒体分类、背后的金主、左与右的立场，以及 AI 时代谁在当新的信息守门人。</p>
+          <span class="wcard-go">Read ↗</span>
+        </a>
+        <a class="wcard" href="https://7feilee.github.io/business-insights/" target="_blank" rel="noopener" data-reveal>
+          <div class="wcard-top"><span class="wcard-ico">📦</span><span class="wcard-host">/business-insights</span></div>
+          <div><div class="wcard-h">你没见过的东西</div><div class="wcard-en">Business Insights</div></div>
+          <p class="wcard-p">商业认知手册：29 章，用"母模式 A–L"拆解商业世界里没被明说、却反复奏效的规律。</p>
+          <span class="wcard-go">Read ↗</span>
+        </a>
+        <a class="wcard" href="https://7feilee.github.io/europe-travel/" target="_blank" rel="noopener" data-reveal data-delay="1">
+          <div class="wcard-top"><span class="wcard-ico">🏛️</span><span class="wcard-host">/europe-travel</span></div>
+          <div><div class="wcard-h">与君王同游</div><div class="wcard-en">Hardcore Europe Travel</div></div>
+          <p class="wcard-p">反社媒打卡的欧洲攻略：30+ 城市，每地配一位最有个性的君王做向导，玩回票价。</p>
+          <span class="wcard-go">Read ↗</span>
+        </a>
+        <a class="wcard" href="https://7feilee.github.io/seven-sins/" target="_blank" rel="noopener" data-reveal data-delay="2">
+          <div class="wcard-top"><span class="wcard-ico">😈</span><span class="wcard-host">/seven-sins</span></div>
+          <div><div class="wcard-h">原罪与算法</div><div class="wcard-en">Seven Sins × Algorithms</div></div>
+          <p class="wcard-p">互联网如何把"七宗罪"工业化来收割你的注意力与数据，以及你如何夺回隐私。</p>
+          <span class="wcard-go">Read ↗</span>
+        </a>
+        <a class="wcard" href="https://7feilee.github.io/world-peoples/" target="_blank" rel="noopener" data-reveal>
+          <div class="wcard-top"><span class="wcard-ico">🌏</span><span class="wcard-host">/world-peoples</span></div>
+          <div><div class="wcard-h">世界民族与社会结构志</div><div class="wcard-en">Peoples &amp; Social Structures</div></div>
+          <p class="wcard-p">30 章，梳理世界各主要民族的源流、社会结构与文化逻辑。</p>
+          <span class="wcard-go">Read ↗</span>
+        </a>
+        <a class="wcard" href="https://7feilee.github.io/physics-lab/" target="_blank" rel="noopener" data-reveal data-delay="1">
+          <div class="wcard-top"><span class="wcard-ico">🔬</span><span class="wcard-host">/physics-lab</span></div>
+          <div><div class="wcard-h">Physica</div><div class="wcard-en">Interactive Physics Lab</div></div>
+          <p class="wcard-p">互动物理实验室：9 条主线 / 70 节课 / 21 个 canvas 模拟，亲手调参、亲眼看见。</p>
+          <span class="wcard-go">Open ↗</span>
+        </a>
+        <a class="wcard" href="https://7feilee.github.io/claude-code-playbook/" target="_blank" rel="noopener" data-reveal data-delay="2">
+          <div class="wcard-top"><span class="wcard-ico">◈</span><span class="wcard-host">/claude-code-playbook</span></div>
+          <div><div class="wcard-h">Claude Code Playbook</div><div class="wcard-en">AI Agent Best Practices</div></div>
+          <p class="wcard-p">交互式指南：用 AI agent 做编码 / 营销 / 系统规划——上下文工程、规格驱动、编排模式。</p>
+          <span class="wcard-go">Open ↗</span>
+        </a>
+      </div>
+      <div class="wiki-cta">
+        <a href="writing.html" class="btn btn-ghost">Full writing index →</a>
+      </div>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer class="footer">
     <div class="wrap footer-grid">
@@ -443,6 +543,7 @@
         <nav class="f-nav">
           <a href="index.html" class="f-link">Home</a>
           <a href="blog/index.html" class="f-link">Blog</a>
+          <a href="writing.html" class="f-link">Writing</a>
           <a href="about.html" class="f-link">About</a>
           <a href="contact.html" class="f-link">Contact</a>
         </nav>
