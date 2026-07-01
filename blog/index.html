@@ -3,143 +3,61 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Blog — Qifei Li</title>
-  <meta name="description" content="Thoughts on security engineering, cryptography, privacy computing, and the EU AI Act — by Qifei Li." />
+  <title>Notes — Qifei Li</title>
+  <meta name="description" content="Notes by Qifei Li on the EU AI Act, privacy computing, and applied security." />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../site.css" />
-  <style>
-    .blog-list { display: flex; flex-direction: column; }
-    .post { display: grid; grid-template-columns: 170px 1fr auto; gap: 2rem; align-items: baseline; padding: 2.2rem 0; border-top: 1px solid var(--line); text-decoration: none; color: inherit; transition: padding-left 0.25s, border-color 0.25s; }
-    .post:last-child { border-bottom: 1px solid var(--line); }
-    .post:hover { padding-left: 0.6rem; border-color: rgba(232,160,32,0.3); }
-    .post-date { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.04em; color: var(--text-3); padding-top: 0.4rem; }
-    .post-body { max-width: 60ch; }
-    .post-title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; color: var(--text-1); line-height: 1.2; margin-bottom: 0.55rem; transition: color 0.2s; }
-    .post:hover .post-title { color: var(--amber); }
-    .post-tag { font-size: 0.92rem; color: var(--text-2); line-height: 1.6; margin-bottom: 0.85rem; }
-    .post-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-    .post-tags span { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.04em; white-space: nowrap; color: var(--text-3); border: 1px solid var(--line); padding: 0.18rem 0.5rem; border-radius: var(--radius); }
-    .post-arr { font-family: var(--font-mono); font-size: 0.9rem; color: var(--text-3); padding-top: 0.5rem; }
-    .post:hover .post-arr { color: var(--amber); }
-    @media (max-width: 700px) { .post { grid-template-columns: 1fr; gap: 0.7rem; } .post-arr { display: none; } }
-  </style>
+  <link rel="stylesheet" href="../paper.css" />
 </head>
 <body>
-  <div class="blueprint" aria-hidden="true"></div>
-  <div class="amb-glow a" aria-hidden="true"></div>
-  <div class="amb-glow t" aria-hidden="true"></div>
+<div class="sheet">
 
-  <nav id="nav">
-    <div class="wrap nav-inner">
-      <a href="../index.html" class="logo">
-        <span class="logo-mark">QL</span>
-        <span class="logo-name">Qifei&nbsp;Li</span>
-        <span class="logo-tag">// Privacy&nbsp;Computing</span>
-      </a>
-      <ul class="nav-links">
-        <li><a href="../index.html" class="nav-link">Home</a></li>
-        <li><a href="../blog/index.html" class="nav-link active">Blog</a></li>
-        <li><a href="../writing.html" class="nav-link">Writing</a></li>
-        <li><a href="../tools.html" class="nav-link">Tools</a></li>
-        <li><a href="../about.html" class="nav-link">About</a></li>
-        <li><a href="../contact.html" class="nav-link">Contact</a></li>
-        <li><a href="https://mayfly.wiki" target="_blank" rel="noopener noreferrer" class="nav-venture"><span>MAYFLY</span> ↗</a></li>
-      </ul>
-      <button class="mobile-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span></button>
-    </div>
-    <div class="mobile-menu" id="mobileMenu">
-      <a href="../index.html" class="mobile-link">Home</a>
-      <a href="../blog/index.html" class="mobile-link">Blog</a>
-      <a href="../writing.html" class="mobile-link">Writing</a>
-      <a href="../tools.html" class="mobile-link">Tools</a>
-      <a href="../about.html" class="mobile-link">About</a>
-      <a href="../contact.html" class="mobile-link">Contact</a>
-      <a href="https://mayfly.wiki" target="_blank" rel="noopener noreferrer" class="mobile-link mv">MAYFLY — EU AI Act Advisory ↗</a>
-    </div>
+  <nav class="line">
+    <a class="mark" href="../index.html">q.li</a>
+    <ul>
+      <li><a href="../index.html">home</a></li>
+      <li><a href="../writing.html">writing</a></li>
+      <li><a href="../tools.html">tools</a></li>
+      <li><a href="index.html" aria-current="page">notes</a></li>
+      <li><a href="../about.html">about</a></li>
+      <li><a href="../contact.html">contact</a></li>
+      <li><a href="https://mayfly.wiki" target="_blank" rel="noopener noreferrer">mayfly&nbsp;↗</a></li>
+    </ul>
   </nav>
-  <header class="page-head">
-    <div class="wrap page-head-row">
-      <span class="page-head-idx">//</span>
-      <div>
-        <span class="page-kicker">Writing</span>
-        <h1 class="page-h1">Notes</h1>
-        <p class="page-sub">Security · Cryptography · Privacy computing · EU AI Act</p>
-      </div>
-    </div>
+
+  <header class="title">
+    <h1>Notes</h1>
+    <p class="role">Occasional, practical, checkable.</p>
   </header>
 
-  <section class="section">
-    <div class="wrap">
-      <div class="blog-list">
-        <a href="eu-ai-act-art10-chinese-companies/" class="post" data-reveal>
-          <span class="post-date">2026 · 06 · 04</span>
-          <div class="post-body">
-            <h2 class="post-title">EU AI Act Article 10 — Data Governance Requirements for Chinese AI Companies</h2>
-            <p class="post-tag">What Annex III high-risk AI systems mean for your training data pipeline — what you must document, what you must fix, and how PET closes the China↔EU gap.</p>
-            <div class="post-tags"><span>eu-ai-act</span><span>data-governance</span><span>article-10</span><span>gdpr</span></div>
-          </div>
-          <span class="post-arr">→</span>
-        </a>
-        <a href="hd-wallet-best-practices/" class="post" data-reveal data-delay="1">
-          <span class="post-date">2026 · 05 · 21</span>
-          <div class="post-body">
-            <h2 class="post-title">HD Wallets — How to Generate and Save Crypto Keys the Right Way</h2>
-            <p class="post-tag">One mnemonic. Bitcoin, Ethereum, Solana. Zero trust required — generate and store keys so they survive device loss, theft, and time.</p>
-            <div class="post-tags"><span>crypto</span><span>security</span><span>self-custody</span><span>bip39</span></div>
-          </div>
-          <span class="post-arr">→</span>
-        </a>
-      </div>
-    </div>
+  <section class="sec">
+    <table class="bt">
+      <thead><tr><th>Date</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="num">2026-06-04</td>
+          <td>
+            <a href="eu-ai-act-art10-chinese-companies/index.html">EU AI Act Article 10 — data-governance requirements for Chinese AI companies</a>
+            <span style="display:block;font-family:var(--mono);font-size:0.68rem;color:var(--faint);margin-top:0.15rem">annex III · training data · GDPR × DSL · PET remedies</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="num">2026-05-21</td>
+          <td>
+            <a href="hd-wallet-best-practices/index.html">HD wallets — how to generate and save crypto keys the right way</a>
+            <span style="display:block;font-family:var(--mono);font-size:0.68rem;color:var(--faint);margin-top:0.15rem">bip39 · self-custody · backup separation · offline verification</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 
-  <footer class="footer">
-    <div class="wrap footer-grid">
-      <div>
-        <div class="f-brand-mark">QL</div>
-        <span class="f-brand-name">Qifei Li</span>
-        <span class="f-brand-tag">// Security Engineer · Privacy Computing</span>
-        <p class="f-brand-loc">Heidelberg, Germany</p>
-      </div>
-      <div>
-        <p class="f-col-title">Site</p>
-        <nav class="f-nav">
-          <a href="../index.html" class="f-link">Home</a>
-          <a href="../blog/index.html" class="f-link">Blog</a>
-          <a href="../about.html" class="f-link">About</a>
-          <a href="../contact.html" class="f-link">Contact</a>
-        </nav>
-      </div>
-      <div>
-        <p class="f-col-title">Connect</p>
-        <nav class="f-nav">
-          <a href="mailto:hello@mayfly.wiki" class="f-link">Email</a>
-          <a href="https://github.com/7feilee" target="_blank" rel="noopener noreferrer" class="f-link">GitHub</a>
-          <a href="https://www.linkedin.com/in/flodyli" target="_blank" rel="noopener noreferrer" class="f-link">LinkedIn</a>
-          <a href="https://x.com/7feilee" target="_blank" rel="noopener noreferrer" class="f-link">X / Twitter</a>
-        </nav>
-      </div>
-      <div>
-        <p class="f-col-title">Venture</p>
-        <a href="https://mayfly.wiki" target="_blank" rel="noopener noreferrer" class="f-venture">
-          <span class="f-venture-logo">MAYFLY</span>
-          <span class="f-venture-desc">EU AI Act compliance advisory for Chinese AI companies in Europe — using Privacy-Enhancing Technologies.</span>
-          <span class="f-venture-cta">Visit mayfly.wiki →</span>
-        </a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <div class="wrap footer-bottom-inner">
-        <span>© 2026 Qifei Li</span><span class="sep">·</span>
-        <span>Heidelberg, Germany</span><span class="sep">·</span>
-        <a href="https://github.com/7feilee" target="_blank" rel="noopener noreferrer">github.com/7feilee</a>
-      </div>
-    </div>
+  <footer class="colophon">
+    <span class="k">ed25519</span> 9f2a:c7d1:e480:6b3f &nbsp;·&nbsp;
+    no analytics · no cookies · no JavaScript · no third-party requests &nbsp;·&nbsp;
+    <a href="https://github.com/7feilee/7feilee.github.io" target="_blank" rel="noopener noreferrer">source</a> &nbsp;·&nbsp;
+    © 2026 Qifei Li, Heidelberg
   </footer>
 
-  <script src="../site.js"></script>
+</div>
 </body>
 </html>
